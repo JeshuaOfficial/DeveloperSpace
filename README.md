@@ -2,13 +2,13 @@
 
 Proyecto para empresa de arquitectura 
 
-**Tiempo estimado: ** 1 mes y 15 dias
+**Tiempo estimado:** 1 mes y 15 dias
 
 ### Como descargar este proyecto
 
 Primero que todo debemos abrir la consola de git o de window y movernos desde la misma hacia el directorio en donde queremos rescargarlo con el comando `cd`
 
-** Ejemplo **
+**Ejemplo**
 
 ```markdown
 $ cd c:/xampp/htdocs/
