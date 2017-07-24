@@ -14,11 +14,11 @@ Primero que todo debemos abrir la consola de git o de window y movernos desde la
 $ cd c:/xampp/htdocs/
 ```
 
-** Nota: se recomienda usar la consola de git ya hay comandos de git que la consola de windows no reconoce **
+**Nota: se recomienda usar la consola de git ya hay comandos de git que la consola de windows no reconoce**
 
 El siguiente paso, despues de habernos movido con la consola hacia el directorio deseado, seria descargar el proyecto con el comando `git clone [url]`, la url la obtendremos desde la pestaña de fondo verde Clone or donwload
 
-** Comando para clonar el proyecto **
+**Comando para clonar el proyecto**
 
 ```markdown
 $ git clone https://github.com/JeshuaOfficial/DeveloperSpace.git master
@@ -29,7 +29,7 @@ Primero que todo debemos movernos hacia el directorio
 
 ### Como subir a github con git
 
-** Nota: para poder realizar estos pasos primero debemos movernos hacia el directorio del proyecto con la consola de git o de windows y haberlo descargado anteriormente desde este repositorio **
+**Nota: para poder realizar estos pasos primero debemos movernos hacia el directorio del proyecto con la consola de git o de windows y haberlo descargado anteriormente desde este repositorio**
 
 Para poder subir el proyecto desde local a git se deben seguir los siguientes comandos
 
