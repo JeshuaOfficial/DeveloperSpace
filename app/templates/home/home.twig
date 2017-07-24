@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+	{{ base_assets()|raw }}
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="views/app/favicon.ico" type="image/x-icon" />
+    <title>{{ config.site.name }}</title>
+
+    {# Fonts #}
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="views/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+	
+	{# Plugins generales #}
+    <link href="views/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="views/plugins/toastr/toastr.min.css" rel="stylesheet">
+	
+	{# Estilos propios #}
+    <link href="views/app/css/app.css" rel="stylesheet">
+</head>
+<body>
+	{# Menu Header #}
+	<header class="top-nav">
+		<nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-faded">
+	        <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#emergent-nav" aria-controls="emergent-nav" aria-expanded="false" aria-label="Toggle navigation">
+	            <span class="navbar-toggler-icon"></span>
+	        </button>
+
+	        <a class="navbar-brand d-flex justify-content-start" href="{{ config.site.url }}">
+	        	<img src="views/app/images/logo.png" alt="Logo Emergente">
+	        </a>
+
+	        <div id="emergent-nav" class="navbar-collapse collapse menu-navigation">
+	            <ul class="navbar-nav ml-auto language-menu">
+	            	<li class="nav-item">
+	                    <a class="nav-link active text-uppercase" href="">ES</a>
+	                </li>
+	                <li class="nav-item hidden-md-down">
+	                    <a class="nav-link text-uppercase">/</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link text-uppercase" href="">EN</a>
+	                </li>
+	            </ul>
+	            <ul class="navbar-nav ml-auto navigation-menu">
+	                <li class="nav-item">
+	                    <a class="nav-link text-uppercase text-white" href="">Estudio</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link text-uppercase text-white" href="">Proyectos</a>
+	                </li>
+	                <li class="nav-item">
+	                    <a class="nav-link text-uppercase text-white" href="">Contacto</a>
+	                </li>
+	            </ul>
+	        </div>
+	    </nav>
+	</header>
+	{# End Menu Header #}
+	
+	{# Main Content #}
+	<div class="main-page"></div>
+	{# End Main Content #}
+
+	{# Footer #}
+	<footer class="footer-page fixed-bottom">
+		<ul class="social-list d-flex justify-content-end">
+			<a href="#" class="mr-2 text-white" target="_blank"><i class="fa fa-instagram"></i></a>
+			<a href="#" class="mr-2 text-white" target="_blank"><i class="fa fa-twitter"></i></a>
+			<a href="#" class="mr-2 text-white" target="_blank"><i class="fa fa-facebook"></i></a>
+			<a href="#" class="mr-3 text-white" target="_blank"><i class="fa fa-google-plus"></i></a>
+		</ul>
+	</footer>
+	{# End Footer #}
+
+	{% if config.framework.debug %}
+        {# jQuery para ver errores de ajax vía consola, no eliminar #}
+        <script src="views/app/js/jdev.js"></script>
+    {% else %}
+        {# jQuery para su plantilla, este puede ser modificado a voluntad #}
+        <script src="views/plugins/jquery/jquery.min.js"></script>
+    {% endif %}
+
+    <script src="views/plugins/tether/js/tether.min.js"></script>
+    <script src="views/plugins/bootstrap/js/bootstrap.min.js"></script>
+    <script src="views/plugins/toastr/toastr.min.js"></script>
+</body>
+</html>

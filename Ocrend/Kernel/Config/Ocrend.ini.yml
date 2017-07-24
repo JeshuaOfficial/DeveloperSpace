@@ -1,0 +1,41 @@
+# Conexión con la base de datos principal
+database:
+  host: localhost
+  user: root
+  pass: 
+  name: emergente
+  port: 1521
+  protocol: TCP
+  motor: mysql
+  
+# Configuración de servidor SMTP
+phpmailer:
+  host: 
+  user: 
+  pass: 
+  port: 465
+
+# Credenciales de uso de SDK PayPal
+paypal:
+  mode: sandbox
+  client_id: 
+  client_secret:
+
+# Configuración de sesiones
+sessions:
+  life_time: 3600 
+
+# Variables del framework
+framework:
+  debug: false
+  version: 2.0.0
+
+# Configuración del sitio
+site:
+  name: Emergente
+  author: Brayan Narváez
+  author_email: prinick@ocrend.com
+  url: http://localhost/emergente/
+  router:
+    path: localhost/emergente/
+    protocol: http

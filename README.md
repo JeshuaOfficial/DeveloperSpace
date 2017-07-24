@@ -1,37 +1,61 @@
-## Welcome to GitHub Pages
+## Proyecto EMERGENTE
 
-You can use the [editor on GitHub](https://github.com/jeshuaofficial/DeveloperSpace/edit/master/README.md) to maintain and preview the content for your website in Markdown files.
+Proyecto para empresa de arquitectura 
 
-Whenever you commit to this repository, GitHub Pages will run [Jekyll](https://jekyllrb.com/) to rebuild the pages in your site, from the content in your Markdown files.
+**Tiempo estimado: ** 1 mes y 15 dias
 
-### Markdown
+### Como descargar este proyecto
 
-Markdown is a lightweight and easy-to-use syntax for styling your writing. It includes conventions for
+Primero que todo debemos abrir la consola de git o de window y movernos desde la misma hacia el directorio en donde queremos rescargarlo con el comando `cd`
+
+** Ejemplo **
 
 ```markdown
-Syntax highlighted code block
-
-# Header 1
-## Header 2
-### Header 3
-
-- Bulleted
-- List
-
-1. Numbered
-2. List
-
-**Bold** and _Italic_ and `Code` text
-
-[Link](url) and ![Image](src)
+$ cd c:/xampp/htdocs/
 ```
 
-For more details see [GitHub Flavored Markdown](https://guides.github.com/features/mastering-markdown/).
+** Nota: se recomienda usar la consola de git ya hay comandos de git que la consola de windows no reconoce **
 
-### Jekyll Themes
+El siguiente paso, despues de habernos movido con la consola hacia el directorio deseado, seria descargar el proyecto con el comando `git clone [url]`, la url la obtendremos desde la pestaña de fondo verde Clone or donwload
 
-Your Pages site will use the layout and styles from the Jekyll theme you have selected in your [repository settings](https://github.com/jeshuaofficial/DeveloperSpace/settings). The name of this theme is saved in the Jekyll `_config.yml` configuration file.
+** Comando para clonar el proyecto **
 
-### Support or Contact
+```markdown
+$ git clone https://github.com/JeshuaOfficial/DeveloperSpace.git master
+```
 
-Having trouble with Pages? Check out our [documentation](https://help.github.com/categories/github-pages-basics/) or [contact support](https://github.com/contact) and we’ll help you sort it out.
+
+Primero que todo debemos movernos hacia el directorio 
+
+### Como subir a github con git
+
+** Nota: para poder realizar estos pasos primero debemos movernos hacia el directorio del proyecto con la consola de git o de windows y haberlo descargado anteriormente desde este repositorio **
+
+Para poder subir el proyecto desde local a git se deben seguir los siguientes comandos
+
+**Paso 1:** Revisamos el estado de los archivos con `git status` para poder ver los cambios que realizamos, lo pintado en fondo rojo son los archivos en los cuales se realizaron cambios.
+
+```markdown
+$ git status
+```
+
+**Paso 2:** Preparamos los archivos con el comando `git add .` ó `git add -A` para ser agregados a un commit.
+
+```markdown
+$ git commit .
+
+// Alternativo
+$ git commit -A
+```
+
+**Paso 3:** Añadimos el archivo a un commit con el comando `git commit -m "descripcion"`, lo cual es necesario cada vez que se suba un cambio al repositorio
+
+```markdown
+$ git commit -m "Inicios del proyecto"
+```
+
+**Paso 4:** Por último quedaria solo subir el commit realizado hacia el repositorio con el comando `git push [url] master`, en este caso [url] la obtenemos en la pestaña "Clone or donwload" del repositorio
+
+```markdown
+$ git push https://github.com/JeshuaOfficial/DeveloperSpace.git master
+```
