@@ -1,37 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
-  <head>
+<head>
     {{ base_assets()|raw }}
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="shortcut icon" href="views/app/favicon.ico" type="image/x-icon" />
     <title>{{ config.site.name }}</title>
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet">
-    <link href="views/app/css/framework.css" rel="stylesheet">
-    {% block appHeader %}
-        <!-- HEADER -->
-    {% endblock %}
-    <!--[if lt IE 9]>
-      <script src="https://oss.maxcdn.com/html5shiv/3.7.3/html5shiv.min.js"></script>
-      <script src="https://oss.maxcdn.com/respond/1.4.2/respond.min.js"></script>
-    <![endif]-->
-  </head>
-  <body>
-    {% block appBody %}
-        <!-- BODY -->
-    {% endblock %}
 
-      {% if config.framework.debug %}
-        {# jQuery para ver errores de ajax vía consola, no eliminar #}
-        <script src="views/app/js/jdev.js"></script>
-      {% else %}
-        {# jQuery para su plantilla, este puede ser modificado a voluntad #}
-        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
-      {% endif %}
+    {# Fonts #}
+    <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="views/plugins/font-awesome/css/font-awesome.css" rel="stylesheet">
+    <link href="views/plugins/brand-icons/css/brand-icons.css" rel="stylesheet">
+  
+    {# Plugins generales #}
+    <link href="views/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
+    <link href="views/plugins/toastr/toastr.min.css" rel="stylesheet">
 
-      <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
-    {% block appFooter %}
-        <!-- FOOTER -->
-    {% endblock %}
-  </body>
+    {# Slider #}
+    <link rel="stylesheet" href="views/plugins/ResponsiveSlides/responsiveslides.css">
+
+    {% block appHeader %}{% endblock %}
+
+    {# Estilos propios #}
+    <link href="views/app/css/app.css" rel="stylesheet">
+</head>
+<body>
+  
+  {# Menu Header #}
+  {% include 'overall/topnav' %}
+  {# End Menu Header #}
+  
+  
+
+  {# Main Content #}
+  {% block content %}
+      
+  {% endblock %}
+  {# End Main Content #}
+
+
+
+  {# Footer #}
+  {% include 'overall/footer' %}
+  {# End Footer #}
+
+
+  {# Scripts #}
+  {% if config.framework.debug %}
+      {# jQuery para ver errores de ajax vía consola, no eliminar #}
+      <script src="views/app/js/jdev.js"></script>
+  {% else %}
+      {# jQuery para su plantilla, este puede ser modificado a voluntad #}
+      <script src="views/plugins/jquery/jquery.min.js"></script>
+  {% endif %}
+  
+  {# General plugins #}
+  <script src="views/plugins/tether/js/tether.min.js"></script>
+  <script src="views/plugins/bootstrap/js/bootstrap.min.js"></script>
+  <script src="views/plugins/toastr/toastr.min.js"></script>
+  <script src="views/plugins/ResponsiveSlides/responsiveslides.min.js"></script>
+
+  {# Estilos de la pagina #}
+  <script src="views/app/js/page.js"></script>
+
+  {# scripts extras #}
+  {% block appFooter %}{% endblock %}
+
+  {# Inicialización de los plugins #}
+  <script src="views/app/js/init.js"></script>
+  
+</body>
 </html>

@@ -12,6 +12,7 @@
 namespace Ocrend\Kernel\Generator;
 
 use Ocrend\Kernel\Generator\CommandException;
+use Ocrend\Kernel\Database\Database;
 
 /**
  * Generador de scripts en PHP
@@ -118,7 +119,225 @@ final class Generator {
       * @var array
     */
     private $tablesCollection = array();
-    
+
+    /**
+      * Crea el contenido de una tabla.
+      *
+      * @return string con el contenido del formulario
+    */
+    private function createViewTableContent() : string {
+      # Obtener el formato de la tabla
+      $table = $this->readFile(self::TEMPLATE_DIR . 'Twig/table.twig');
+
+      # Obtener el formato del thead
+      $thead = $this->readFile(self::TEMPLATE_DIR . 'Twig/Resources/thead.twig');
+
+      # Obtener el formato del tbody
+      $tbody = $this->readFile(self::TEMPLATE_DIR . 'Twig/Resources/tbody.twig');
+
+      # Obtener el formato de los actions
+      $actions = $this->readFile(self::TEMPLATE_DIR . 'Twig/Resources/actions.twig');
+      $actions = str_replace('{{view}}',$this->name['view'],$actions);
+      $actions = str_replace('{{id_element}}','{{ d.id_'.$this->table_name.' }}',$actions);
+
+      # Obtener el formato del títutlo de las acciones
+      $actions_title = $this->readFile(self::TEMPLATE_DIR . 'Twig/Resources/actions_title.twig');
+
+      # Reemplazos base
+      $table = str_replace('{{view}}',$this->name['view'],$table);
+      $table = str_replace('{{model}}',$this->name['model'],$table);
+
+      # Inicio del thead
+      $thead_final = "<tr>\n";
+      # Inicio del tbody
+      $tbody_final = "{% for d in data if false != data %}\n<tr>\n";
+
+      # Recorrer los campos de la tabla creada
+      foreach($this->tablesCollection as $name => $field_info) {
+        # Hacer thead
+        $thead_final .= "\t" . str_replace('{{name}}',ucwords(str_replace('_',' ',$name)),$thead) . "\n";
+        # Hacer tbody
+        $tbody_final .= str_replace('{{name}}','{{ d.'.$name.' }}',$tbody) . "\n";
+      }
+
+      # TR final del unico elemento en el thead con el título de las acciones
+      $thead_final .= "$actions_title \n</tr>";
+
+      # Añadir las acciones 
+      $tbody_final .= "$actions \n";
+      # TR final de cada elemento en el tbody
+      $tbody_final .= "</tr>\n{% endfor %}";
+
+      # Reemplazo final
+      $table = str_replace('{{thead}}',$thead_final,$table);
+      $table = str_replace('{{tbody}}',$tbody_final,$table);
+
+      return $table;
+    }
+
+    /**
+      * Crea el contenido de una vista de formulario.
+      *
+      * @param bool $is_crud: Utilizado para saber si se llama desde un crud
+      * @param bool $edit: En caso de que sea desde un crud, se usa para definir los {{value}} automáticos
+      * 
+      * @return string con el contenido del formulario
+    */
+    private function createViewFormContent(bool $is_crud, bool $edit = false) : string {
+      # Obtener formato para inputs
+      $inputs = $this->readFile(self::TEMPLATE_DIR . 'Twig/Resources/inputs.twig');
+
+      # Obtener la vista
+      $form = $this->readFile(self::TEMPLATE_DIR . 'Twig/form.twig');
+
+      # Reemplazar datos básicos
+      $form = str_replace('{{view}}',$this->name['view'],$form);
+      $form = str_replace('{{model}}',$this->name['model'],$form);
+
+      # Verificar si hay campos para una base de datos
+      if($this->modules['database']) {
+        # Desde la edición
+        if($is_crud) {
+          if($edit) {
+            $form = str_replace('{{ajax_file_name}}','editar',$form);
+          } else {
+            $form = str_replace('{{ajax_file_name}}','crear',$form);
+          }
+        } else {
+          $form = str_replace('{{ajax_file_name}}',$this->name['view'],$form);
+        }
+        
+        # Conjunto de inputs
+        $final_inputs = "\n";
+        # Reemplazar inputs
+        foreach($this->tablesCollection as $name => $field_info) {
+          # Si puede ser de tipo email
+          if(false !== strpos($name,'email')) {
+             $field_input = str_replace('{{type_input}}','email',$inputs);
+          # Si puede ser un teléfono 
+          } elseif(false !== strpos($name,'phone') 
+               || false !== strpos($name,'telefono') 
+               || false !== strpos($name,'celular')) {
+             $field_input = str_replace('{{type_input}}','tel',$inputs);
+          # Si no, un texto cualquiera
+          } else {
+            $field_input = str_replace('{{type_input}}','text',$inputs);
+          }
+          
+          # Desde la edición
+          if($edit) {
+            $field_input = str_replace('{{value}}','{{ data.'.$name.' }}',$field_input);
+          # Desde la creación o sin crud
+          } else {
+            $field_input = str_replace('{{value}}','',$field_input);
+          }
+          
+          # Últimos retoques
+          $field_input = str_replace('{{name}}',$name,$field_input);
+          $field_input = str_replace('{{label}}',ucwords(str_replace('_',' ',$name)),$field_input);
+
+          # Añadir el input al formulario
+          $final_inputs .= "$field_input\n\n";
+        }
+        
+        # Reemplazo final
+        $form = str_replace('{{inputs}}',$final_inputs,$form);    
+
+        # Campo oculto
+        if($edit) {
+          $form = str_replace('{{hiddens}}',"<input type=\"hidden\" name=\"id_" . $this->table_name . "\" value=\"{{ data.id_" . $this->table_name . " }}\" />\n",$form);
+        } else {
+          $form = str_replace('{{hiddens}}','',$form);
+        }
+        
+      }
+      # Si no, es un formulario por defecto que tiene ajax 
+      else {
+        # Reemplazar datos básicos
+        $form = str_replace('{{ajax_file_name}}',$this->name['view'],$form);
+        # Reemplazar inputs
+        $inputs = str_replace('{{type_input}}','text',$inputs);
+        $inputs = str_replace('{{value}}','',$inputs);
+        $inputs = str_replace('{{name}}','ejemplo',$inputs);
+        $inputs = str_replace('{{label}}','Campo De Ejemplo',$inputs);
+        # Reemplazo final
+        $form = str_replace('{{hiddens}}','',$form);
+        # Campo oculto
+        $form = str_replace('{{inputs}}',$inputs,$form);        
+      }
+
+      return $form;
+    }
+
+    /**
+      * Crea las vistas solicitadas por comando
+      *
+      * @return void
+    */
+    private function createViews() {
+      # Ruta para las vistas
+      $ruta = self::R_TEMPLATES . $this->name['view'] . '/';
+
+      # Crear ruta si no existe
+      if(!is_dir($ruta)) {
+        mkdir($ruta,0777,true);
+      # Si existe la ruta existen ficheros dentro
+      } else {
+        throw new CommandException('La ruta ' . $ruta . ' ya existe.');
+      }
+
+      # Si es un crud se utilizan form.twig y table.twig con toda la carpeta Templates/Twig/Resources
+      if($this->modules['crud']) {
+        # Obtener la vista CREACIÓN
+        $form = $this->createViewFormContent(true);
+        # Crear la vista CREACIÓN
+        $this->writeFile($ruta . 'crear.twig',$form);
+        $this->writeLn('Se ha creado el fichero ' . $ruta . 'crear.twig');
+
+        # Obtener la vista EDICIÓN
+        $form = $this->createViewFormContent(true,true);
+        # Crear la vista EDICIÓN
+        $this->writeFile($ruta . 'editar.twig',$form);
+        $this->writeLn('Se ha creado el fichero ' . $ruta . 'editar.twig');
+
+        # Obtener la vista LISTADO
+        $table = $this->createViewTableContent();
+        # Crear la vista LISTADO
+        $this->writeFile($ruta . $this->name['view'] .'.twig',$table);
+        $this->writeLn('Se ha creado el fichero ' . $ruta . $this->name['view'] .'.twig');
+      }
+      # Si hay un modelo y una petición ajax, vista form.twig
+      else if($this->modules['model'] && ($this->modules['ajax'] || null !== $this->modules['api'])) {
+        # Obtener la vista
+        $form = $this->createViewFormContent(false);
+        # Crear la vista
+        $this->writeFile($ruta . $this->name['view'] . '.twig',$form);
+        $this->writeLn('Se ha creado el fichero ' . $ruta . $this->name['view'] . '.twig');
+      } 
+      # Vista por defecto cuando no hay modelos ni crud blank.twig
+      else {
+        # Obtener la vista
+        $blank = $this->readFile(self::TEMPLATE_DIR . 'Twig/blank.twig');
+        # Crear la vista
+        $this->writeFile($ruta . $this->name['view'] . '.twig',$blank);
+        $this->writeLn('Se ha creado el fichero ' . $ruta . $this->name['view'] . '.twig');
+      }
+    }
+
+    /**
+      * Escribe un mensaje en consola y salta de línea 
+      *
+      * @param null|string $msg: Mensaje 
+      *
+      * @return void
+    */
+    private function writeLn($msg = null) {
+        if(null != $msg) {
+            echo "$msg";
+        } 
+        
+        echo "\n";
+    }
 
     /**
       * Devuelve un string con el contenido de un archivo
@@ -141,9 +360,14 @@ final class Generator {
       * @param string $dir: Directorio del archivo escribir/crear
       * @param string $content: Contenido a escribir
       *
+      * @throws CommandException si el fichero ya existe
       * @return int :catidad de bytes escritos en el archivo
     */
     private function writeFile(string $dir, string $content) : int {
+      if(file_exists($dir)) {
+        throw new CommandException('El fichero ' . $dir . ' ya existe.');
+      }
+      
       $f = new \SplFileObject($dir,'w');
       return (int) $f->fwrite($content);
     }
@@ -161,6 +385,54 @@ final class Generator {
     }
 
     /**
+      * Crea la tabla en la base de datos.
+      *
+      * @return void
+    */
+    private function createTable() {
+      global $config;
+
+      # Abrir conexión a la base de datos
+      $db = Database::Start(
+          $config['database']['name'],
+          $config['database']['motor'],
+          false
+      );
+
+      # Empezar a escribir
+      $SQL = 'CREATE TABLE `' . $this->table_name . '` (';
+
+      # Crear el campo del id
+      $SQL .= ' `id_' . $this->table_name . '` INT(11) NOT NULL AUTO_INCREMENT,'; 
+
+      # Llenar la query con los campos
+      $sizeof = sizeof($this->tablesCollection);
+      $i = 1;
+      foreach ($this->tablesCollection as $name => $field_info) {
+        # `campo` tipo(longitud)
+        $SQL .= ' `' . trim($name) . '` ' . $field_info['tipo'] . (null !== $field_info['longitud'] ? '('.trim($field_info['longitud']).') ' : ' ') .  'NOT NULL';
+
+        # Agregar la coma
+        if($i < $sizeof) {
+          $SQL .= ' , ';
+        } $i++;
+      }
+
+      # Cerrar la query
+      $SQL .= ', PRIMARY KEY (`id_' . $this->table_name . '`)';
+      $SQL .= " ) ENGINE='InnoDB' DEFAULT CHARSET='utf8' COLLATE='utf8_unicode_ci';";
+      
+      # Crear la query
+      $db->query($SQL);
+
+      # Cerrar la conexión
+      $db = null;
+
+      # Mostrar mensaje por pantalla
+      $this->writeLn('Se ha creado la tabla ' . $this->table_name . ' en la base de datos ' . $config['database']['name']);
+    }
+
+    /**
       * Se encarga de definir el contenido que tendrá un controlador de acuerdo al comando.
       * El contenido va a variar si se está haciendo un CRUD, si se creó también un modelo o una vista.
       *
@@ -175,26 +447,26 @@ final class Generator {
         \${{model_var}} = new Model\\{{model}}(\$router);
 
         switch(\$this->method) {
-            case 'crear':
-                echo \$this->template->render('{{view}}/crear');
-            break;
-            case 'editar':
-                if(\$this->isset_id and false !== (\$data = \${{model_var}}->get(false))) {
-                    echo \$this->template->render('{{view}}/editar', array(
-                        'data' => \$data[0]
-                     ));
-                } else {
-                    \$this->functions->redir(\$config['site']['url'] . '{{view}}/&error=true');
-                }
-            break;
-            case 'eliminar':
-                \${{model_var}}->delete();
-            break;
-            default:
-                echo \$this->template->render('{{view}}/{{view}}',array(
-                    'data' => \${{model_var}}->get()
-                ));
-            break;
+          case 'crear':
+            echo \$this->template->render('{{view}}/crear');
+          break;
+          case 'editar':
+            if(\$this->isset_id and false !== (\$data = \${{model_var}}->get(false))) {
+              echo \$this->template->render('{{view}}/editar', array(
+                'data' => \$data[0]
+              ));
+            } else {
+              \$this->functions->redir(\$config['site']['url'] . '{{view}}/&error=true');
+            }
+          break;
+          case 'eliminar':
+            \${{model_var}}->delete();
+          break;
+          default:
+            echo \$this->template->render('{{view}}/{{view}}',array(
+              'data' => \${{model_var}}->get()
+            ));
+          break;
         }";
       } else {
         # Si existe un modelo
@@ -203,7 +475,7 @@ final class Generator {
         }
         # Si existe una vista
         if($this->modules['view']) {
-          $content .= "echo \$this->template->render('{{view}}/{{view}}');\n";
+          $content .= "\t\techo \$this->template->render('{{view}}/{{view}}');\n";
         }
       }
 
@@ -227,7 +499,7 @@ final class Generator {
         $size = sizeof($this->tablesCollection);
         $i = 1;
         foreach($this->tablesCollection as $field => $data) {
-          $database_fields .= "\t\t\t'$field' => \$http->request->get('$field')";
+          $database_fields .= "\t\t\t\t\t'$field' => \$http->request->get('$field')";
           if($i < $size) {
             $database_fields .= ",\n";
           } 
@@ -235,125 +507,127 @@ final class Generator {
         }
 
         # Contenido
-        $content = "\n\n\**
-          * Controla los errores de entrada del formulario
-          *
-          * @throws ModelsException
-        */
-        final private function errors() {
-            global \$http;
-            # throw new ModelsException('¡Esto es un error!');
-        }
+        $content = "
+    /**
+      * Controla los errores de entrada del formulario
+      *
+      * @throws ModelsException
+    */
+    final private function errors() {
+      global \$http;
+      # throw new ModelsException('¡Esto es un error!');
+    }
 
-        /** 
-          * Crea un elemento de {{model}} en {{table_name}}
-          *
-          * @return array con información para la api, un valor success y un mensaje.
-        */
-        final public function add() {
-            try {
-                global \$htpp;
-                
-                # Controlar errores de entrada en el formulario
-                \$this->errors();
+    /** 
+      * Crea un elemento de {{model}} en la tabla `{{table_name}}`
+      *
+      * @return array con información para la api, un valor success y un mensaje.
+    */
+    final public function add() {
+      try {
+        global \$htpp;
+                  
+        # Controlar errores de entrada en el formulario
+        \$this->errors();
 
-                # Insertar elementos
-                \$this->db->insert('{{table_name}}',array(
+        # Insertar elementos
+        \$this->db->insert('{{table_name}}',array(
 $database_fields
-                ));
+        ));
 
-            } catch(ModelsException \$e) {
-                return array('success' => 0, 'message' => \$e->getMessage());
-            } finally {
-                return array('success' => 1, 'message' => 'Creado con éxito.');
-            }
-        }
-        
-        /** 
-          * Edita un elemento de {{model}} en {{table_name}}
-          *
-          * @return array con información para la api, un valor success y un mensaje.
-        */
-        final public function edit() : array {
-            try {
-                global \$htpp;
+      } catch(ModelsException \$e) {
+        return array('success' => 0, 'message' => \$e->getMessage());
+      } finally {
+        return array('success' => 1, 'message' => 'Creado con éxito.');
+      }
+    }
+          
+    /** 
+      * Edita un elemento de {{model}} en la tabla `{{table_name}}`
+      *
+      * @return array con información para la api, un valor success y un mensaje.
+    */
+    final public function edit() : array {
+      try {
+        global \$htpp;
 
-                # Obtener el id del elemento que se está editando y asignarlo en \$this->id
-                \$this->setId(\$http->request->get('{{id_table_name}}'),'No se puede editar el elemento.'); 
-                
-                # Controlar errores de entrada en el formulario
-                \$this->errors();
+        # Obtener el id del elemento que se está editando y asignarlo en \$this->id
+        \$this->setId(\$http->request->get('{{id_table_name}}'),'No se puede editar el elemento.'); 
+                  
+        # Controlar errores de entrada en el formulario
+        \$this->errors();
 
-                # Actualizar elementos
-                \$this->db->update('{{table_name}}',array(
+        # Actualizar elementos
+        \$this->db->update('{{table_name}}',array(
 $database_fields
-                ),\"{{id_table_name}}='\$this->id'\",'LIMIT 1');
+        ),\"{{id_table_name}}='\$this->id'\",'LIMIT 1');
 
-            } catch(ModelsException \$e) {
-                return array('success' => 0, 'message' => \$e->getMessage());
-            } finally {
-                return array('success' => 1, 'message' => 'Editado con éxito.');
-            }
-        }
+      } catch(ModelsException \$e) {
+        return array('success' => 0, 'message' => \$e->getMessage());
+      } finally {
+        return array('success' => 1, 'message' => 'Editado con éxito.');
+      }
+    }
 
-        /** 
-          * Borra un elemento de {{model}} en {{table_name}}
-          * y luego redirecciona a {{view}}/&success=true
-          *
-          * @return void
-        */
-        final public function delete() {
-            global \$config;
-            # Borrar el elemento de la base de datos
-            \$this->db->delete('{{table_name}}',\"{{id_table_name}}='\$this->id'\");
-            # Redireccionar a la página principal del controlador
-            \$this->functions->redir(\$config['site']['url'] . '{{view}}/&success=true');
-        }
+    /** 
+      * Borra un elemento de {{model}} en la tabla `{{table_name}}`
+      * y luego redirecciona a {{view}}/&success=true
+      *
+      * @return void
+    */
+    final public function delete() {
+      global \$config;
+      # Borrar el elemento de la base de datos
+      \$this->db->delete('{{table_name}}',\"{{id_table_name}}='\$this->id'\");
+      # Redireccionar a la página principal del controlador
+      \$this->functions->redir(\$config['site']['url'] . '{{view}}/&success=true');
+    }
 
-        /**
-          * Obtiene elementos de {{model}} en {{table_name}}
-          *
-          * @param bool \$multi: true si se quiere obtener un listado total de los elementos 
-          *                     false si se quiere obtener un único elemento según su {{id_table_name}}
-          * @param string \$select: Elementos de {{table_name}} a seleccionar
-          *
-          * @return false|array: false si no hay datos.
-          *                      array con los datos.
-        */
-        final public function get(bool \$multi = true, string \$select = '*') {
-            if(\$multi) {
-                return \$this->db->select('*','{{table_name}}');
-            }
+    /**
+      * Obtiene elementos de {{model}} en la tabla `{{table_name}}`
+      *
+      * @param bool \$multi: true si se quiere obtener un listado total de los elementos 
+      *                     false si se quiere obtener un único elemento según su {{id_table_name}}
+      * @param string \$select: Elementos de {{table_name}} a seleccionar
+      *
+      * @return false|array: false si no hay datos.
+      *                      array con los datos.
+    */
+    final public function get(bool \$multi = true, string \$select = '*') {
+      if(\$multi) {
+        return \$this->db->select('*','{{table_name}}');
+      }
 
-            return \$this->db->select('*','{{table_name}}',\"{{id_table_name}}='\$this->id'\",'LIMIT 1');
-        }\n";
+      return \$this->db->select('*','{{table_name}}',\"{{id_table_name}}='\$this->id'\",'LIMIT 1');
+    }\n";
       } else {
         # Si existe una escritura en la api
         if(null !== $this->modules['api'] || $this->modules['ajax']) {
-          $content = "/**
-            * Devuelve un arreglo para la api
-            *
-            * @return array
-          */
-          final public function foo() : array {
-              global \$http;
+          $content = "
+    /**
+      * Devuelve un arreglo para la api
+      *
+      * @return array
+    */
+    final public function foo() : array {
+      global \$http;
 
-              return array('success' => 1, 'message' => 'Funcionando');
-          }\n";
+      return array('success' => 1, 'message' => 'Funcionando');
+    }\n";
         }
         # Si hay una tabla nueva creada
         if($this->modules['database']) {
-          $content .= "\n\n/**
-            * Obtiene elementos de {{model}} en {{table_name}}
-            *
-            * @param string \$select: Elementos de {{table_name}} a seleccionar
-            *
-            * @return false|array: false si no hay datos.
-            *                     array con los datos.
-          */
-          final public function get(string \$select = '*') {
-              return \$this->db->select(\$select,'{{table_name}}');
-          }\n";
+          $content .= "\n\n\t\t/**
+      * Obtiene elementos de {{model}} en {{table_name}}
+      *
+      * @param string \$select: Elementos de {{table_name}} a seleccionar
+      *
+      * @return false|array: false si no hay datos.
+      *                     array con los datos.
+    */
+    final public function get(string \$select = '*') {
+      return \$this->db->select(\$select,'{{table_name}}');
+    }\n";
         }
       }
       
@@ -368,16 +642,24 @@ $database_fields
     */
     private function createApiContent(bool $model) : string {
       if($model) {
-        return "\n\n\$app->{{method}}('/{{view}}', function() use(\$app) {
-            \${{model_var}} = new Model\{{model}}; 
+        return "\n/**
+  * Acción vía ajax de {{model}} en api/{{view}}
+  *
+  * @return json
+*/\n\$app->{{method}}('/{{view}}', function() use(\$app) {
+  \${{model_var}} = new Model\{{model}}; 
 
-            return \$app->json(\${{model_var}}->{{method_model}}());   
-    });";
+  return \$app->json(\${{model_var}}->{{method_model}}());   
+});";
       }
 
-      return "\n\n\$app->{{method}}('/{{view}}', function() use(\$app) {
-            return \$app->json(array('success' => 0, 'message' => 'Funcionando.'));   
-    });";
+      return "\n/**
+  * Acción vía api/{{view}}
+  *
+  * @return json
+*/\n\$app->{{method}}('/{{view}}', function() use(\$app) {
+  return \$app->json(array('success' => 0, 'message' => 'Funcionando.'));   
+});";
 
     }
 
@@ -520,7 +802,7 @@ $database_fields
 
         # Propios de edit
         $edit = str_replace('{{view}}',$this->name['view'] . '/editar',$edit);
-        $add = str_replace('{{method_model}}','edit',$add);
+        $edit = str_replace('{{method_model}}','edit',$edit);
 
         # Escribir en add y edit
         $route = self::R_API . 'post.php';
@@ -550,7 +832,7 @@ $database_fields
       $this->writeLn('Se ha escrito en ' . $route);
 
       # Crear fichero javascript
-      if($this->modules['crud'] || $this->modules['ajax']) {
+      if($this->modules['crud'] || $this->modules['ajax'] || null !== $this->modules['api']) {
         $this->createAjax();
       }
     }
@@ -563,7 +845,7 @@ $database_fields
     private function buildFiles() {
       # Crear tabla en la base de datos
       if($this->modules['crud'] || $this->modules['database']) {
-        // Registrar base de datos
+        $this->createTable();
       }
 
       # Crear controlador
@@ -583,25 +865,15 @@ $database_fields
 
       # Crear vista
       if($this->modules['crud'] || $this->modules['view']) {
-        //Crear vista
+        $this->createViews();
       }
     }
 
     /**
-      * Escribe un mensaje en consola y salta de línea 
-      *
-      * @param null|string $msg: Mensaje 
+      * Muestra información de ayuda a través de la consola
       *
       * @return void
     */
-    private function writeLn($msg = null) {
-        if(null != $msg) {
-            echo "$msg";
-        } 
-        
-        echo "\n";
-    }
-
     private function help() {
         $this->writeLn();
         $this->writeLn('Comandos disponibles ');
@@ -645,6 +917,12 @@ $database_fields
         $this->writeLn('-db [Nombre de la tabla en la DB] campo1:tipo:longitud(opcional) campo2:tipo');
     }
 
+    /**
+      * Se encarga de analizar la sintaxis de los comandos y decidir qué hacer
+      *
+      * @throws CommandException cuando existe algún problema con la sintaxis
+      * @return void
+    */
     private function lexer() {
       # Cargar la ayuda
       if($this->arguments[0] == '-ayuda' || 
@@ -810,6 +1088,8 @@ $database_fields
         }
         # Picar argumentos
         $this->arguments = array_slice($args,1);
+        # Espacio en blanco
+        $this->writeLn();
         # Empezar a leer los argumentos
         $this->lexer();
         # Comenzar a construir los archivos

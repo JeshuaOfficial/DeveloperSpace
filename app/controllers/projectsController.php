@@ -17,17 +17,18 @@ use Ocrend\Kernel\Controllers\Controllers;
 use Ocrend\Kernel\Controllers\ControllersInterface;
   
 /**
- * Controlador home/
+ * Controlador projects/
  *
- * @author DevSystemVzla
+ * @author Brayan Narváez <prinick@ocrend.com>
 */
-
-class homeController extends Controllers implements ControllersInterface {
+  
+class projectsController extends Controllers implements ControllersInterface {
 
     public function __construct(RouterInterface $router) {
-        parent::__construct($router);  
-        
-        echo $this->template->render('home/home');
+        parent::__construct($router);   
+        // Contenido del controlador... 
+		echo $this->template->render('projects/projects');
+
     }
 
 }

@@ -1,0 +1,40 @@
+{% extends 'overall/layout' %}
+
+{% block content %}
+{# Main Content #}
+<section id="main-content" class="container">
+	<header class="menu-categories-filter">
+		<ul class="menu-filter d-flex pt-3 justify-content-end mr-5 mb-3">
+			<li class="active">
+				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Todo</a>
+			</li>
+			<li>
+				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Residencial</a>
+			</li>
+			<li>
+				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Comercial</a>
+			</li>
+			<li>
+				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Público</a>
+			</li>
+			<li>
+				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Deportivo</a>
+			</li>
+		</ul>
+	</header>
+
+	<div class="row projects">
+		{% for i in range(1,20) %}
+		<div class="col-md-4 col-xl-3 pr-1 pl-0 mb-1">
+			<article class="project-card">
+				<figure>
+					<img class="img-thumbnail" src="views/app/images/menegrande/MENE1.jpg" alt="MENE{{i}}.jpg">
+				</figure>
+			</article>
+		</div>
+		{% endfor %}
+		
+	</div>
+</section>
+{# End Main Content #}
+{% endblock %}

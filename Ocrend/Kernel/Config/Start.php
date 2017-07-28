@@ -32,6 +32,13 @@ if (version_compare(phpversion(), '7.0.0', '<')) {
 }
 
 /**
+  * Lectura y escritura de caché para Twig
+*/
+if(!is_writable(API_INTERFACE . 'app/templates/.cache/') || !is_readable(API_INTERFACE . 'app/templates/.cache/')) {
+  throw new \RuntimeException('Debe conceder permisos de escritura y lectura a la ruta ' . API_INTERFACE . 'app/templates/.cache/');
+}
+
+/**
   * Obtiene la configuración inicial del sistema, conexión a la base de datos,
   * constantes de phpmailer, credenciales de la api de paypal, etc.
 */
@@ -46,6 +53,11 @@ $session = new Session(new NativeSessionStorage(
   )
 ));
 $session->start();
+
+/**
+  * Define el timezone actual, en Puerto Rico
+*/
+date_default_timezone_get($config['site']['timezone']);
 
 /**
   * Capa orientada a objetos para reemplazar las peticiones Http $_GET, $_POST, $_FILES, $_COOKIES, $_SERVER

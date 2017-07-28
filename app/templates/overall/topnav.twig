@@ -1,0 +1,36 @@
+<header class="top-nav">
+  <nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-faded container">
+    <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#emergent-nav" aria-controls="emergent-nav" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+    </button>
+
+    <a class="navbar-brand d-flex justify-content-start" href="{{ config.site.url }}">
+      <img src="views/app/images/{{controller == 'home' ? 'logo_home' : 'logo'}}.png" alt="Logo Emergente">
+    </a>
+
+    <div id="emergent-nav" class="navbar-collapse collapse menu-navigation">
+        <ul class="navbar-nav ml-auto language-menu">
+          <li class="nav-item">
+                <a class="nav-link active text-uppercase pr-0;" href="">ES</a>
+            </li>
+            <li class="nav-item hidden-md-down">
+                <a class="nav-link text-uppercase pl-0 pr-0">/</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-uppercase pl-0" href="">EN</a>
+            </li>
+        </ul>
+        <ul class="navbar-nav ml-auto navigation-menu">
+            <li class="nav-item">
+                <a class="nav-link text-uppercase text-black" href="">Estudio</a>
+            </li>
+            <li class="nav-item active">
+                <a class="nav-link text-uppercase text-black" href="projects/">Proyectos</a>
+            </li>
+            <li class="nav-item">
+                <a class="nav-link text-uppercase text-black" href="contact/">Contacto</a>
+            </li>
+        </ul>
+    </div>
+  </nav>
+</header>

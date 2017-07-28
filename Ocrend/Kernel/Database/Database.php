@@ -62,7 +62,6 @@ use Ocrend\Kernel\Database\DatabaseException;
   */
   final public function __construct(string $name, string $motor) {
     try {
-      
       global $config;
 
       switch ($motor) {
@@ -159,12 +158,12 @@ use Ocrend\Kernel\Database\DatabaseException;
   /**
     * Sana un valor para posteriormente ser introducido en una query
     *
-    * @param string/int/float a sanar
+    * @param null/string/int/float a sanar
     *
     * @return int/float/string sanados según sea el tipo de dato pasado por parámetro
   */
   final public function scape($e) {
-    if(!isset($e)) {
+    if(null == $e) {
       return '';
     }
 
@@ -286,8 +285,17 @@ use Ocrend\Kernel\Database\DatabaseException;
     *
     * @return false si no encuentra ningún resultado, array asociativo/numérico si consigue al menos uno
   */
-  final public function select(string $e, string $table, string $where = '1 = 1', string $limit = "") {
-    $sql = $this->query("SELECT $e FROM $table WHERE $where $limit;");
+  final public function select(string $e, string $table, string $where = '1 = 1', string $limit = "") {    
+    return $this->query_select("SELECT $e FROM $table WHERE $where $limit;");
+  }
+
+   /**
+    * Realiza una query, ideal para trabajar con SELECTS, JOINS, etc
+    *
+    * @return false si no encuentra ningún resultado, array asociativo/numérico si consigue al menos uno
+  */
+  final public function query_select(string $query) {
+    $sql = $this->query($query);
     $result = $sql->fetchAll();
     $sql->closeCursor();
 

@@ -15,12 +15,6 @@ phpmailer:
   pass: 
   port: 465
 
-# Credenciales de uso de SDK PayPal
-paypal:
-  mode: sandbox
-  client_id: 
-  client_secret:
-
 # Configuración de sesiones
 sessions:
   life_time: 3600 
@@ -33,9 +27,10 @@ framework:
 # Configuración del sitio
 site:
   name: Emergente
-  author: Brayan Narváez
-  author_email: prinick@ocrend.com
+  author: DevSystemVzla
+  author_email: devsystemvzla@gmail.com
   url: http://localhost/emergente/
+  timezone: America/Caracas
   router:
     path: localhost/emergente/
     protocol: http
