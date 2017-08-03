@@ -4,42 +4,290 @@
 {# Main Content #}
 <section id="main-content" class="container">
 	<header class="menu-categories-filter">
-		<ul class="menu-filter d-flex pt-3 justify-content-end mr-5 mb-3">
-			<li class="active">
+		<ul class="menu-filter d-flex pt-3 justify-content-end mr-5 mb-3 flex-wrap">
+			<li class="active" data-filter="all">
 				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Todo</a>
 			</li>
-			<li>
+			<li data-filter="1">
 				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Residencial</a>
 			</li>
-			<li>
+			<li data-filter="2">
 				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Comercial</a>
 			</li>
-			<li>
+			<li data-filter="3">
 				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Público</a>
 			</li>
-			<li>
+			<li data-filter="4">
 				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">Deportivo</a>
 			</li>
 		</ul>
 	</header>
 
-	<div class="row projects">
-		{% for i in range(1,20) %}
-		<div class="col-md-4 col-xl-3 pr-1 pl-0 mb-1">
-			<article class="project-card">
-				<figure>
-					<img class="img-thumbnail" src="views/app/images/menegrande/MENE1.jpg" alt="MENE{{i}}.jpg">
-				<figcaption>
-					<strong><i class="fa fa-home fa-2x"></i></strong>
-					<h5>CASA 01-86</h5>
-					<p>Lorem ipsum dolor sit amet</p>
+	<div class="row mt-5 projects filtr-container">
+		<article class="col-md-4 col-sm-6 filtr-item" id="articulo_1" data-category="1" onclick="execute_plug('articulo_1','particles-js')">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 full" src="views/app/images/menegrande/MENE1.jpg" alt="">
+				<div id="particles-js"></div>
+				<figcaption class="full-width text-center p-absolute text-white" id="figcaption">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 72</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
 				</figcaption>
-				</figure>
-			</article>
-		</div>
-		{% endfor %}
+			</figure>
+		</article>
 		
+		<article class="col-md-4 col-sm-6 filtr-item" data-category="2">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 full" src="views/app/images/menegrande/MENE2.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 73</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+
+		<article class="col-md-4 col-sm-6  filtr-item" data-category="3">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 full" src="views/app/images/menegrande/MENE3.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 74</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+	
+		<article class="col-md-4 col-sm-6 filtr-item" data-category="4">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 full" src="views/app/images/menegrande/MENE4.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 75</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+
+		<article class="col-md-4 col-sm-6 filtr-item" data-category="4">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 p-absolute full" src="views/app/images/menegrande/MENE5.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 76</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+
+		<article class="col-md-4 col-sm-6 filtr-item" data-category="4">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 p-absolute full" src="views/app/images/menegrande/MENE5.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 77</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+
+		<article class="col-md-4 col-sm-6  filtr-item" data-category="4">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 p-absolute full" src="views/app/images/menegrande/MENE5.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 78</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+		<article class="col-md-4 col-sm-6 filtr-item" data-category="4">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 p-absolute full" src="views/app/images/menegrande/MENE5.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 79</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+		<article class="col-md-4 col-sm-6 filtr-item" data-category="4">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 p-absolute full" src="views/app/images/menegrande/MENE5.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 80</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+		<article class="col-md-4 col-sm-6 filtr-item" data-category="4">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 p-absolute full" src="views/app/images/menegrande/MENE5.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 81</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+		<article class="col-md-4 col-sm-6 filtr-item" data-category="4">
+			<figure class="m-0 p-relative full">
+				<img class="img-thumbnail p-0 p-absolute full" src="views/app/images/menegrande/MENE5.jpg" alt="">
+				<figcaption class="full-width text-center p-absolute text-white">
+					<img class="mt-4 mb-3" src="views/app/images/ch.png" alt="">
+					<h5>RUSTY 82</h5>
+					<p>MARACAIBO - EDO. ZULIA. VENEZUELA</p>					
+				</figcaption>
+			</figure>
+		</article>
+
 	</div>
 </section>
 {# End Main Content #}
+{% endblock %}
+
+{# Script Extra #}
+{% block appFooter %}
+<script src="views/plugins/particles/demo/js/lib/stats.js"></script>
+<script src="views/plugins/Filterizr/dist/jquery.filterizr.min.js"></script>
+
+<script>
+
+function execute_plug(id_articulo,id){
+	$('#'+id_articulo).addClass('active');
+	$('#'+id).css('display', 'block');
+	particlesJS(id,
+  
+  {
+    "particles": {
+      "number": {
+        "value": 80,
+        "density": {
+          "enable": true,
+          "value_area": 150
+        }
+      },
+      "color": {
+        "value": "#fff"
+      },
+      "shape": {
+        "type": "circle",
+        "stroke": {
+          "width": 0,
+          "color": "#000000"
+        },
+        "polygon": {
+          "nb_sides": 5
+        },
+        "image": {
+          "src": "img/github.svg",
+          "width": 100,
+          "height": 100
+        }
+      },
+      "opacity": {
+        "value": 0.5,
+        "random": false,
+        "anim": {
+          "enable": false,
+          "speed": 6,
+          "opacity_min": 0.1,
+          "sync": false
+        }
+      },
+      "size": {
+        "value": 6,
+        "random": true,
+        "anim": {
+          "enable": false,
+          "speed": 40,
+          "size_min": 0.1,
+          "sync": false
+        }
+      },
+      "line_linked": {
+        "enable": true,
+        "distance": 150,
+        "color": "#fff",
+        "opacity": 0.4,
+        "width": 1
+      },
+      "move": {
+        "enable": true,
+        "speed": 4,
+        "direction": "none",
+        "random": false,
+        "straight": false,
+        "out_mode": "out",
+        "attract": {
+          "enable": true,
+          "rotateX": 500,
+          "rotateY": 500
+        }
+      }
+    },
+    "interactivity": {
+      "detect_on": "canvas",
+      "events": {
+        "onhover": {
+          "enable": false,
+          "mode": "grab"
+        },
+        "onclick": {
+          "enable": false,
+          "mode": "push"
+        },
+        "resize": true
+      },
+      "modes": {
+        "grab": {
+          "distance": 400,
+          "line_linked": {
+            "opacity": 1
+          }
+        },
+        "bubble": {
+          "distance": 400,
+          "size": 40,
+          "duration": 2,
+          "opacity": 8,
+          "speed": 3
+        },
+        "repulse": {
+          "distance": 200
+        },
+        "push": {
+          "particles_nb": 4
+        },
+        "remove": {
+          "particles_nb": 2
+        }
+      }
+    },
+    "retina_detect": true,
+    "config_demo": {
+      "hide_card": false,
+      "background_color": "#b61924",
+      "background_image": "",
+      "background_position": "50% 50%",
+      "background_repeat": "no-repeat",
+      "background_size": "cover"
+    }
+  }
+
+);
+}
+// $(document).ready(function(){
+	
+// 	$('#figcaption').click(function(){
+// 		$('#article').addClass('active');
+// 		$('.false').attr('id', 'particles-js');
+		
+// 	});
+// });
+</script>
+
+<script src="views/plugins/particles/particles.min.js"></script>
+
 {% endblock %}

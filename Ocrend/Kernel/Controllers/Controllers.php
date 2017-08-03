@@ -91,6 +91,7 @@ abstract class Controllers {
         
         # Request global
         $this->template->addGlobal('get', $http->query->all());
+        $this->template->addGlobal('controller', $router->getController());
         $this->template->addGlobal('server', $http->server->all());
         $this->template->addGlobal('session', $session->all());
         $this->template->addGlobal('config', $config);

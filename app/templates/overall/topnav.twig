@@ -24,10 +24,10 @@
             <li class="nav-item">
                 <a class="nav-link text-uppercase text-black" href="">Estudio</a>
             </li>
-            <li class="nav-item active">
+            <li class="nav-item {% if controller == 'projects' %} active {% endif %}">
                 <a class="nav-link text-uppercase text-black" href="projects/">Proyectos</a>
             </li>
-            <li class="nav-item">
+            <li class="nav-item {% if controller == 'contact' %} active {% endif %}">
                 <a class="nav-link text-uppercase text-black" href="contact/">Contacto</a>
             </li>
         </ul>

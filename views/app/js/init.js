@@ -2,6 +2,8 @@ $(document).ready(function(){
 
 	// Responsive Slides
 	rslidesInit();
+
+	filter_image();
 });
 
 function rslidesInit() {
@@ -13,9 +15,9 @@ function rslidesInit() {
 	  	nav: false,             // Boolean: Show navigation, true or false
 	  	random: false,          // Boolean: Randomize the order of the slides, true or false
 	  	pause: false,           // Boolean: Pause on hover, true or false
-	  	pauseControls: false,    // Boolean: Pause when hovering controls, true or false
-	  	prevText: "Siguiente",   // String: Text for the "previous" button
-	  	nextText: "Anterior",       // String: Text for the "next" button
+	  	pauseControls: false,   // Boolean: Pause when hovering controls, true or false
+	  	prevText: "Siguiente",  // String: Text for the "previous" button
+	  	nextText: "Anterior",   // String: Text for the "next" button
 	  	maxwidth: "",           // Integer: Max-width of the slideshow, in pixels
 	  	navContainer: "",       // Selector: Where controls should be appended to, default is after the 'ul'
 	  	manualControls: "",     // Selector: Declare custom pager navigation
@@ -23,4 +25,8 @@ function rslidesInit() {
 	  	before: function(){},   // Function: Before callback
 	  	after: function(){}     // Function: After callback
 	});
+}
+
+function filter_image() {
+	$('.filtr-container').filterizr();
 }

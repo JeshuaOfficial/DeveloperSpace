@@ -20,7 +20,10 @@ ul{
 .full-width{
 	width: 100%;
 }
-
+.full{
+	width: 100%;
+	height: 100%;
+}
 .text-black{
 	color: #000000 !important;
 }
@@ -28,6 +31,24 @@ ul{
 .text-2e{
 	color: #2e2e2e !important;
 }
+.p-relative{
+	position: relative;
+}
+.p-absolute{
+	position: absolute;
+}
+.font-size-15{
+	font-size: 15px !important;
+}
+.ml-70{
+	margin-left: 70%;
+}
+.btn-black{
+	background: #000;
+	color: #fff;
+	cursor: pointer;
+}
+
 
 /* Main Content */
 .main-page{
@@ -58,6 +79,7 @@ ul{
 }
 
 .top-nav .navbar-nav.language-menu li a.active{
+
 	color: #03AF74 !important;
 }
 .top-nav .navbar-nav.navigation-menu li a {
@@ -116,74 +138,69 @@ ul{
 	color: #828282;
 	text-decoration: none;
 }
+.menu-categories-filter .menu-filter li {
+	transition: all .3s ease-in-out;
+}
 .menu-categories-filter .menu-filter li.active a{
 	border-right: solid 6px #6b6b6b;
 }
-/* Proyectos */
-.projects .project-card figure{
-	margin-bottom: 0;
-	position: relative;
+
+/* Projectos */
+.projects article {
+	height: 250px;
 }
-.projects .project-card figure img{
+.filtr-item {
+    padding: .25rem;
+}
+.projects article figure > img {
 	border: none;
-	padding: 0;
 	border-radius: 0;
 }
 
-
-
-.projects .project-card figcaption p{
-    font-size: 16px;
-    text-align: center;
-
+.projects article figure figcaption {
+	width: 0;
+	height: 70%;
+	background-color: rgba(0,0,0,.8);
+	top: 15%;
+	transition: all .3s ease-in-out;
+	visibility: hidden;
+	opacity: 0;
+	left: 50%;
 }
-.projects .project-card figcaption h5{
-    font-size: 20px;
-    text-align: center;
-
+.projects article figure figcaption img{
+	width: 70px;
 }
-
-.projects .project-card figcaption strong{
-	padding:20% 50% 20% 50%;
+.projects article figure figcaption h5{
+	font-size: 14px;
 }
-
-
-.projects .project-card figcaption strong li{
-    display: inline-block;
-    
-
+.projects article figure figcaption p{
+	font-size: 12px;
 }
-
-
-.projects .project-card figcaption{
-    padding: 30px;
-    color: transparent;
-    background-color: transparent;
-    position: absolute;
-    z-index: 996;
-    bottom:0;
-    left: 0;
-    width: 100%;
-    height: 0;
-    overflow: hidden;
-    visibility: hidden;
-    -webkit-transition: all 0.3s ease-in-out;
-       -moz-transition: all 0.3s ease-in-out;
-         -o-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
+.projects article:hover figcaption {
+	left: 0;
+	width: 100%;
+	opacity: 1;
+	visibility: visible;
+}
+.projects article.active figure figcaption{
+	transition: all .3s ease-in-out;
+	width: 80%;
+	left: 10%;
+	visibility: visible;
+	opacity: 1;
 }
 
-.projects .project-card figure:hover figcaption{
-    visibility: visible;
-    color: #fff;
-    background: rgba(0,0,0,0.8);
-    height: 70%;
-    bottom: 15%;
-    -webkit-transition: all 0.3s ease-in-out;
-       -moz-transition: all 0.3s ease-in-out;
-         -o-transition: all 0.3s ease-in-out;
-            transition: all 0.3s ease-in-out;
+/* Contacto - Pagina: /contact; */
+.contact-info h5{
+	font-size: 1rem;
+	color: #000;
+	font-weight: 600;
 }
-
-
-
+.contact-info i{
+	width: 20px;
+	font-size: 20px;
+}
+#google-map{
+	background-color: #bbb;
+	height: 300px;
+}
