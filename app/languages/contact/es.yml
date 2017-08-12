@@ -1,0 +1,9 @@
+desc:
+  contact: Contáctanos
+  work: Trabaja con nosotros
+
+form:
+  name: Nombre
+  email: Email
+  message: Mensaje
+  button: Enviar

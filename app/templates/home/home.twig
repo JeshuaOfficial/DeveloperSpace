@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="views/app/favicon.ico" type="image/x-icon" />
+    {#<link rel="shortcut icon" href="views/app/favicon.ico" type="image/x-icon" />#}
     <title>{{ config.site.name }}</title>
 
     {# Fonts #}
@@ -22,6 +22,9 @@
 	
 	{# Estilos propios #}
     <link href="views/app/css/home.css" rel="stylesheet">
+
+    {# favicon #}
+    <link rel="icon" type="image/png" sizes="16x16" href="views/app/images/icon.png" />
 </head>
 <body>
 	{# Menu Header #}
@@ -38,24 +41,24 @@
 	        <div id="emergent-nav" class="navbar-collapse collapse menu-navigation">
 	            <ul class="navbar-nav ml-auto language-menu">
 	            	<li class="nav-item">
-	                    <a class="nav-link active text-uppercase" href="">ES</a>
+	                    <a class="nav-link {% if actual_lang == 'es' %}active{% endif %} text-uppercase" href="{{lang_url}}es">ES</a>
 	                </li>
 	                <li class="nav-item hidden-md-down">
 	                    <a class="nav-link text-uppercase">/</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link text-uppercase" href="">EN</a>
+	                    <a class="nav-link {% if actual_lang == 'en' %}active{% endif %} text-uppercase" href="{{lang_url}}en">EN</a>
 	                </li>
 	            </ul>
 	            <ul class="navbar-nav ml-auto navigation-menu">
 	                <li class="nav-item">
-	                    <a class="nav-link text-uppercase text-white" href="">Estudio</a>
+	                    <a class="nav-link text-uppercase text-white" href="">{{lang.topnav.studio}}</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link text-uppercase text-white" href="projects">Proyectos</a>
+	                    <a class="nav-link text-uppercase text-white" href="projects">{{lang.topnav.projects}}</a>
 	                </li>
 	                <li class="nav-item">
-	                    <a class="nav-link text-uppercase text-white" href="contact">Contacto</a>
+	                    <a class="nav-link text-uppercase text-white" href="contact">{{lang.topnav.contact}}</a>
 	                </li>
 	            </ul>
 	        </div>
@@ -65,10 +68,10 @@
 	
 	{# Main Content #}
 	<div class="main-page">
-		<ul class="rslides">
-		  <li><img class="full-screen" src="views/app/images/pozoviejocasa4/z (6).jpg" alt=""></li>
-		  <li><img class="full-screen" src="views/app/images/pozoviejocasa4/z (1).jpg" alt=""></li>
-		  <li><img class="full-screen" src="views/app/images/pozoviejocasa4/z (7).jpg" alt=""></li>
+		<ul class="rslides_home">
+			{% for s in slides %}
+			<li><img class="full-screen" src="{{ s.file }}" alt="{{ s.file }}"></li>
+			{% endfor %}
 		</ul>
 	</div>
 	{# End Main Content #}
@@ -76,10 +79,10 @@
 	{# Footer #}
 	<footer class="footer-page fixed-bottom">
 		<ul class="social-list d-flex justify-content-end">
-			<a href="#" class="mr-2 text-white instagram" target="_blank"><i class="fa fa-instagram"></i></a>
-			<a href="#" class="mr-2 text-white twitter" target="_blank"><i class="fa fa-twitter"></i></a>
-			<a href="#" class="mr-2 text-white facebook" target="_blank"><i class="fa fa-facebook"></i></a>
-			<a href="#" class="mr-3 text-white google-plus" target="_blank"><i class="fa fa-google-plus"></i></a>
+			<a href="{{ social.instagram }}" class="mr-2 text-white instagram" target="_blank"><i class="fa fa-instagram"></i></a>
+			<a href="{{ social.twitter }}" class="mr-2 text-white twitter" target="_blank"><i class="fa fa-twitter"></i></a>
+			<a href="{{ social.facebook }}" class="mr-2 text-white facebook" target="_blank"><i class="fa fa-facebook"></i></a>
+			<a href="{{ social.google }}" class="mr-3 text-white google-plus" target="_blank"><i class="fa fa-google-plus"></i></a>
 		</ul>
 	</footer>
 	{# End Footer #}
@@ -99,7 +102,7 @@
     <script src="views/plugins/ResponsiveSlides/responsiveslides.min.js"></script>
 
     {# Inicialización de los plugins #}
-	<script src="views/app/js/init.js"></script>
+	<script src="views/app/js/rslider.js"></script>
 	
 </body>
 </html>

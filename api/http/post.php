@@ -34,3 +34,15 @@ $app->post('/lostpass', function() use($app) {
 
     return $app->json($u->lostpass());   
 });
+
+
+/**
+    * Envia un mensaje de contacto
+    *
+    * @return json
+*/
+$app->post('/contact', function() use($app) {
+    $u = new Model\Contact; 
+
+    return $app->json($u->Contact());   
+});

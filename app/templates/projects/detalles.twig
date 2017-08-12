@@ -1,0 +1,78 @@
+{% extends 'overall/layout' %}
+{% block appHeader %}
+{# Slider #}
+<link rel="stylesheet" href="views/plugins/lightslider/dist/css/lightslider.min.css">
+
+
+{% endblock %}
+{% block content %}
+{# Main Content #}
+<section id="main-content" class="container">
+	<header class="menu-categories-filter">
+		<ul class="menu-filter d-flex pt-3 justify-content-end mr-5 mb-3 flex-wrap">
+			<li class="active" data-filter="all">
+				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">{{lang.all}}</a>
+			</li>
+			{% for c in categories if 0 < categories|length %}
+			<li data-filter="{{c.id_categorias}}">
+				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">{{ actual_lang == 'es' ?  c.name_es : c.name_en}}</a>
+			</li>
+			{% endfor %}
+			
+		</ul>
+	</header>
+
+	<section class="row mt-5 filtr-container">
+		<header class="pt-3 w-100">
+			<h4 class="font-weight-bold text-6b6b6b text-uppercase">{{project.titulo}}</h4>
+
+
+			<div class="demo">
+		        <div class="item">            
+		            <div class="clearfix">
+		                <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+		                	{% for g in gallery %}
+		                	<li data-thumb="{{g}}"> 
+				                <img style="width: 1140px !important;" src="{{g}}" />
+				            </li> 
+		                	{% endfor %} 
+		                </ul>
+		            </div>
+		        </div>
+		        
+		    </div>            
+		</header>
+
+		<article class="mt-5">
+			{{ (actual_lang == 'es' ?  project.content_es : project.content_en)|raw }}
+		</article>
+		
+	</section>
+</section>
+{# End Main Content #}
+{% endblock %}
+
+{# Script Extra #}
+{% block appFooter %}
+<script src="views/plugins/particles/demo/js/lib/stats.js"></script>
+<script src="views/plugins/Filterizr/dist/jquery.filterizr.min.js"></script>
+<script src="views/plugins/particles/particles.min.js"></script>
+<script src="views/plugins/lightslider/dist/js/lightslider.min.js"></script>
+<script>
+	$(document).ready(function() {
+			
+        $('#image-gallery').lightSlider({
+            gallery:true,
+            item:1,
+            thumbItem:5,
+            slideMargin: 0,
+            auto:false,
+            loop:true,
+            autoWidth:true,
+            onSliderLoad: function() {
+                $('#image-gallery').removeClass('cS-hidden');
+            }  
+        });
+	});
+</script>
+{% endblock %}

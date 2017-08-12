@@ -27,7 +27,9 @@ class contactController extends Controllers implements ControllersInterface {
     public function __construct(RouterInterface $router) {
         parent::__construct($router);   
         // Contenido del controlador... 
-		echo $this->template->render('contact/contact');
+		echo $this->template->render('contact/contact',array(
+			'contact' => (new Model\Contact)->getContactInfo()
+		));
 
     }
 

@@ -13,7 +13,8 @@ namespace Ocrend\Kernel\Controllers;
 
 use app\models as Model;
 use Ocrend\Kernel\Router\RouterInterface;
-use Ocrend\Kernel\Helpers\Functions;
+use Ocrend\Kernel\Helpers\{Functions, Strings};
+use Ocrend\Kernel\Language\Language;
 
 /**
  * Clase para conectar todos los controladores del sistema y compartir la configuración.
@@ -53,6 +54,14 @@ abstract class Controllers {
     protected $functions;
 
     /** 
+      * Contiene la información de lenguaje actual
+      *
+      * @var array
+    */
+    protected $lang = array();
+
+
+    /** 
       * Parámetros de configuración para el controlador con la forma:
       * 'parmáetro' => (bool) valor
       *
@@ -88,6 +97,18 @@ abstract class Controllers {
             # en true, las plantillas generadas tienen un método __toString() para mostrar los nodos generados
             'debug' => $config['framework']['debug']
         )); 
+
+        # Instancia del lenguaje
+        $lang = new Language;
+
+        # Colocar lenguaje solicitado
+        $lang->setLanguage();
+
+        # Obtener el lenguaje general
+        $this->lang = $lang->loadLanguage('overall');
+
+        # Obtener lenguaje para el controlador actual
+        $this->lang = array_merge($this->lang, $lang->loadLanguage($router->getController()));
         
         # Request global
         $this->template->addGlobal('get', $http->query->all());
@@ -95,7 +116,12 @@ abstract class Controllers {
         $this->template->addGlobal('server', $http->server->all());
         $this->template->addGlobal('session', $session->all());
         $this->template->addGlobal('config', $config);
+        $this->template->addGlobal('lang_url', $this->UrlLang());
+        $this->template->addGlobal('lang', $this->lang);
+        $this->template->addGlobal('actual_lang', $lang->getLanguage());
         $this->template->addExtension($this->functions);
+        $this->template->addExtension(new Strings);
+        $this->template->addGlobal('social', (new Model\Redes)->getRedes()[0]);
 
         # Verificar para quién está permitido este controlador
         $this->knowVisitorPermissions();
@@ -103,6 +129,31 @@ abstract class Controllers {
         # Auxiliares
         $this->method = $router->getMethod();
         $this->isset_id = (bool) (is_numeric($router->getID()) && $router->getID() >= 1);
+    }
+
+    /** 
+      * Prepara la URL actual para que tome el formato adecuado y poder cambiar de lenguaje.
+      *
+      * @return string con la url formateada
+    */
+    private function UrlLang() : string {
+      global $http;
+
+      $base_url = 'http://'.$http->server->get('HTTP_HOST') . $http->server->get('REQUEST_URI');
+
+      if (null !== $http->query->get('lang')) {
+        $base_url = str_replace('?lang='.$http->query->get('lang'),'', $base_url);
+        $base_url = str_replace('&lang='.$http->query->get('lang'),'', $base_url);
+      }
+
+      if (sizeof($http->query->all()) > 1) {
+        $base_url .= '&';
+      }else{
+        $base_url .= '?';
+      }
+
+      $base_url .= 'lang=';
+      return $base_url;
     }
 
     /**

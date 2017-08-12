@@ -5,8 +5,9 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <link rel="shortcut icon" href="views/app/favicon.ico" type="image/x-icon" />
+    {#<link rel="shortcut icon" href="views/app/favicon.ico" type="image/x-icon" />#}
     <title>{{ config.site.name }}</title>
+    
 
     {# Fonts #}
     <link href="https://fonts.googleapis.com/css?family=Raleway:400,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
@@ -16,15 +17,16 @@
     {# Plugins generales #}
     <link href="views/plugins/bootstrap/css/bootstrap.min.css" rel="stylesheet">
     <link href="views/plugins/toastr/toastr.min.css" rel="stylesheet">
-    <link href="views/plugins/particles/demo/css/style.css" rel="stylesheet" >
 
-    {# Slider #}
-    <link rel="stylesheet" href="views/plugins/ResponsiveSlides/responsiveslides.css">
 
     {% block appHeader %}{% endblock %}
 
     {# Estilos propios #}
     <link href="views/app/css/app.css" rel="stylesheet">
+
+    {# favicon #}
+    <link rel="apple-touch-icon" href="views/app/images/icon.png">
+    <link rel="icon" type="image/png" sizes="16x16" href="views/app/images/icon.png" />
 </head>
 <body>
   
@@ -60,7 +62,6 @@
   <script src="views/plugins/tether/js/tether.min.js"></script>
   <script src="views/plugins/bootstrap/js/bootstrap.min.js"></script>
   <script src="views/plugins/toastr/toastr.min.js"></script>
-  <script src="views/plugins/ResponsiveSlides/responsiveslides.min.js"></script>
 
   {# Estilos de la pagina #}
   <script src="views/app/js/page.js"></script>
@@ -68,8 +69,7 @@
   {# scripts extras #}
   {% block appFooter %}{% endblock %}
 
-  {# Inicialización de los plugins #}
-  <script src="views/app/js/init.js"></script>
+
   
 </body>
 </html>

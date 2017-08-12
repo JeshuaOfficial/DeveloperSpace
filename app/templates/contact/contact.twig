@@ -1,6 +1,7 @@
 {% extends 'overall/layout' %}
 {% block appHeader %}
-<link rel="stylesheet" href="views/plugins/map-icons/dist/css/map-icons.min.css">
+<link rel="stylesheet" href="views/plugins/toastr/toastr.css">
+<link rel="stylesheet" href="views/plugins/ladda/ladda.css">
 {% endblock %}
 {% block content %}
 {# Main Content #}
@@ -8,63 +9,58 @@
     	<div class="row mt-5">
     		<div class="col-md-6 col-sm-12 mb-5">
     			<div class="" id="google-map"></div>
-                <form class="mt-5">
+                <form class="mt-5" id="contact_form">
                     <div class="form-group row">
-                        <label for="nombre" class="col-2 col-form-label">Nombre </label>
+                        <label for="nombre" class="col-2 col-form-label">{{lang.form.name}} </label>
                         <div class="col-8">
                             <input type="text" name="nombre" class="form-control" id="nombre">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="e-mail" class="col-2 col-form-label">Email </label>
+                        <label for="e-mail" class="col-2 col-form-label">{{lang.form.email}} </label>
                         <div class="col-8">
-                            <input type="text" name="e-mail" class="form-control" id="e-mail">
+                            <input type="email" name="email" class="form-control" id="e-mail">
                         </div>
                     </div>
                     <div class="form-group row">
-                        <label for="mensaje" class="col-2 col-form-label">Mensaje </label>
+                        <label for="mensaje" class="col-2 col-form-label">{{lang.form.message}} </label>
                         <div class="col-8">
                             <textarea id="mensaje" class="form-control" name="mensaje" rows="3"></textarea>
                         </div>
                     </div>
-                     <button type="submit" class="btn btn-black ml-70">Enviar</button>
+                     <button type="button" id="contact" class="btn btn-black ml-70">{{lang.form.button}}</button>
                 </form>
     		</div>
     		<div class="col-md-6 col-sm-12 contact-info">
-    			<h5 class="text-black">Contáctanos</h5>
+    			<h5 class="text-black">{{lang.desc.contact}}</h5>
     			<address>
     				<div class="d-inline-flex flex-wrap w-100">
                         <i class="fa fa-map-marker text-center"></i>        
-                        <p class="text-muted pl-2">Av. Delicias esquina con calle 72 cc.Plaza xxx local xx</p>
+                        <p class="text-muted pl-2">{{ contact.address[actual_lang] }}</p>
                     </div>
                    
                     <div class="d-inline-flex flex-wrap w-100">
                         <i class="fa fa-location-arrow text-center"></i>
-                        <p class="text-muted pl-2">Cómo llegar</p>
+                        <p class="text-muted pl-2">{{ contact.como[actual_lang] }}</p>
                     </div>
                     
                     <div class="d-inline-flex flex-wrap w-100">
                         <i class="fa fa-mobile text-center"></i>
-                        <p class="text-muted pl-2">(0261) xxx-xxxx (0414) xxx-xxxx</p>
+                        <p class="text-muted pl-2">{{contact.phone_1}}  {{contact.phone_2}}</p>
                     </div>
                     <div class="d-inline-flex flex-wrap w-100">
                         <i class="fa fa-envelope-o text-center font-size-15"></i>
                         <div class="text-muted pl-2">
-                            <p class="m-0">mariannacolina@emergente.com</p>
-                            <p class="m-0">joseangelorondon@emergente.com</p>
-                            <p class="m-0">info@emergente.com</p>
-                            <p class="m-0">administracion@emergente.com</p>
+                            {% for e in contact.emails %}
+                            <p class="m-0">{{e}}</p>
+                            {% endfor %}
+                            
                         </div>
                     </div>
     			</address>
-    			<h5 class="text-black">Trabaja con nosotros</h5>
+    			<h5 class="text-black">{{lang.desc.work}}</h5>
                 <div>
-                    <p class="text-muted pl-4">Somos una empresa comprometidad con el talentohumano... bla bla bla bla bla bla bla bla bla blabla bla bla bla blabla blabla bla bla bla bla bla bla bla bla blal Lorem ipsum dolor sit amet, consectetur adipisicing elit, sed do eiusmod
-                    tempor incididunt ut labore et dolore magna aliqua. Ut enim ad minim veniam,
-                    quis nostrud exercitation ullamco laboris nisi ut aliquip ex ea commodo
-                    consequat. Duis aute irure dolor in reprehenderit in voluptate velit esse
-                    cillum dolore eu fugiat nulla pariatur. Excepteur sint occaecat cupidatat non
-                    proident, sunt in culpa qui officia deserunt mollit anim id est laborum.</p>
+                    <p class="text-muted pl-4">{{ contact.work[actual_lang] }}</p>
                 </div>
     		</div>
     	</div>
@@ -75,7 +71,7 @@
 {% block appFooter %}
 <script>
       function initMap() {
-        var uluru = {lat: 10.6592029, lng: -71.6066187};
+        var uluru = {lat: {{contact.latitud}}, lng: {{contact.longitud}}};
         var map = new google.maps.Map(document.getElementById('google-map'), {
           zoom: 10,
           center: uluru
@@ -88,5 +84,9 @@
     </script>
     <script async defer
     src="https://maps.googleapis.com/maps/api/js?key=AIzaSyAtJPgWRN6ZCd6IE3i73rADdp2FSL-ixcc&callback=initMap">
-    </script>
+</script>
+<script src="views/plugins/toastr/toastr.min.js"></script>
+<script src="views/plugins/ladda/spin.min.js"></script>
+<script src="views/plugins/ladda/ladda.min.js"></script>
+<script src="views/app/js/contact/contact.js"></script>
 {% endblock %}

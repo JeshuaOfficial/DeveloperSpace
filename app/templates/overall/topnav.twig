@@ -1,3 +1,4 @@
+
 <header class="top-nav">
   <nav class="navbar fixed-top navbar-toggleable-md navbar-light bg-faded container">
     <button class="navbar-toggler navbar-toggler-right" type="button" data-toggle="collapse" data-target="#emergent-nav" aria-controls="emergent-nav" aria-expanded="false" aria-label="Toggle navigation">
@@ -11,24 +12,24 @@
     <div id="emergent-nav" class="navbar-collapse collapse menu-navigation">
         <ul class="navbar-nav ml-auto language-menu">
           <li class="nav-item">
-                <a class="nav-link active text-uppercase pr-0;" href="">ES</a>
+                <a class="nav-link {% if actual_lang == 'es' %}active{% endif %} text-uppercase pr-0;" href="{{ lang_url }}es">ES</a>
             </li>
             <li class="nav-item hidden-md-down">
                 <a class="nav-link text-uppercase pl-0 pr-0">/</a>
             </li>
             <li class="nav-item">
-                <a class="nav-link text-uppercase pl-0" href="">EN</a>
+                <a class="nav-link {% if actual_lang == 'en' %}active{% endif %} text-uppercase pl-0" href="{{ lang_url }}en">EN</a>
             </li>
         </ul>
         <ul class="navbar-nav ml-auto navigation-menu">
             <li class="nav-item">
-                <a class="nav-link text-uppercase text-black" href="">Estudio</a>
+                <a class="nav-link text-uppercase text-black" href="">{{lang.topnav.studio}}</a>
             </li>
             <li class="nav-item {% if controller == 'projects' %} active {% endif %}">
-                <a class="nav-link text-uppercase text-black" href="projects/">Proyectos</a>
+                <a class="nav-link text-uppercase text-black" href="projects/">{{lang.topnav.projects}}</a>
             </li>
             <li class="nav-item {% if controller == 'contact' %} active {% endif %}">
-                <a class="nav-link text-uppercase text-black" href="contact/">Contacto</a>
+                <a class="nav-link text-uppercase text-black" href="contact/">{{lang.topnav.contact}}</a>
             </li>
         </ul>
     </div>

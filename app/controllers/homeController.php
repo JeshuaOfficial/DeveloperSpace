@@ -27,7 +27,9 @@ class homeController extends Controllers implements ControllersInterface {
     public function __construct(RouterInterface $router) {
         parent::__construct($router);  
         
-        echo $this->template->render('home/home');
+        echo $this->template->render('home/home',array(
+        	'slides' => (new Model\Home)->getSlides()
+        ));
     }
 
 }

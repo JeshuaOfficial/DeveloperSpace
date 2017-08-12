@@ -10,9 +10,9 @@ database:
   
 # Configuración de servidor SMTP
 phpmailer:
-  host: 
-  user: 
-  pass: 
+  host: p3plcpnl0173.prod.phx3.secureserver.net
+  user: dev@ocrend.com
+  pass: Devocrend++
   port: 465
 
 # Configuración de sesiones
