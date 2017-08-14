@@ -27,7 +27,6 @@ use Ocrend\Kernel\Helpers\Strings;
 
 class Proyectos extends Models implements ModelsInterface {
 
-    // Contenido del modelo... 
 
 
     /**
@@ -52,50 +51,11 @@ class Proyectos extends Models implements ModelsInterface {
           # Traemos todos los proyectos
           $proj = $this->db->select('*','proyectos');
         }
+        $proj[0]['categorias'] = implode(', ', json_decode( $proj[0]['categorias'], true ) );
         
-        
-        # Si no hay resultamos retornamos false
-        if (false == $proj) {
-          return false;
-        }
-        # Preparamos la consulta
-        $prepare = $this->db->prepare("SELECT c.id_categorias,c.name_es FROM categoria_proyecto cp INNER JOIN categorias c ON cp.id_categoria = c.id_categorias WHERE cp.id_proyecto = ?");
-
-        # Recorremos los proyectos
-        foreach ($proj as $p) {
-            # Ejecutamos la consulta preparada
-            $prepare->execute(array($p['id_proyectos']));
-            # Convertimos los datos en array
-            $result = $prepare->fetchAll();
-
-            # Creamos el nuevo array con los datos
-            $real_proj[] = array(
-              'id_proyectos' => $p['id_proyectos'],
-              'titulo' => $p['titulo'],
-              'short_desc_es' => $p['short_desc_es'],
-              'short_desc_en' => $p['short_desc_en'],
-              'content_es' => $p['content_es'],
-              'content_en' => $p['content_en'],
-              'portada' => $p['portada'],
-              'logo' => $p['logo'],
-              'categorias' => $this->category_in_string($result)
-            );
-        }
-        return $real_proj;
+        return $proj;
     }
-    /**
-     * Convierte las categorias asociada a un proyecto en un string
-     * @param array $categorias - Arreglo de categorias
-     * @return String de categorias en formato categoria1, categoria2,...
-     */
-    final private function category_in_string(array $categorias) {        
-        $cat_str = '';
-        foreach ($categorias as $c) {
-            $cat_str .= $c['id_categorias'] . ',';
-        }
-        $cat_str[strlen($cat_str) - 1] = ' ';
-        return str_replace(',', ', ', $cat_str);
-    }
+
     /**
      * Obtiene todas la categorias
      * @return array con todas las categorías

@@ -123,6 +123,8 @@ abstract class Controllers {
         $this->template->addExtension(new Strings);
         $this->template->addGlobal('social', (new Model\Redes)->getRedes()[0]);
 
+        (new Model\Visitas)->contar();
+
         # Verificar para quién está permitido este controlador
         $this->knowVisitorPermissions();
 
