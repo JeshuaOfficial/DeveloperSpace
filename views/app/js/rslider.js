@@ -1,3 +1,4 @@
+//console.log();
 (function() {
 	$(".rslides_home").responsiveSlides({
 	  	auto: true,             // Boolean: Animate automatically, true or false
@@ -17,4 +18,35 @@
 	  	before: function(){},   // Function: Before callback
 	  	after: function(){}     // Function: After callback
 	});
+})();
+
+(function() {
+	
+	$(window).resize(function(){
+		body_condition();
+	});
+		
+	body_condition();
+
+	function responsive_menu(){
+		var landscape = window.matchMedia("(orientation: landscape)").matches ? 40 : 0;
+
+		
+		var menu = {
+			width: ($('.navigation-menu').outerWidth() / 2),
+			height: ($('.navigation-menu').outerHeight() / 2)
+		}
+		
+		$('.navigation-menu').css({
+			'left': 'calc(50% - '+menu.width+'px)',
+			'top': (($('body').height() / 2) - menu.height) +  landscape +'px'
+		});
+		
+	}
+	function body_condition(){
+		if ($('body').width() <= 768) {
+			responsive_menu();
+		}
+	}
+	
 })();

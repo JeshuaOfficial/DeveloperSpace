@@ -2,6 +2,7 @@
 {% block appHeader %}
 {# Slider #}
 <link rel="stylesheet" href="views/plugins/lightslider/dist/css/lightslider.min.css">
+<link rel="stylesheet" href="views/plugins/PgwSlideshow/pgwslideshow.css">
 
 
 {% endblock %}
@@ -22,18 +23,16 @@
 		</ul>
 	</header>
 
-	<section class="row mt-5 filtr-container">
-		<header class="pt-3 w-100">
+	<section class="row filtr-container">
+		<header class="w-100">
 			<h4 class="font-weight-bold text-6b6b6b text-uppercase">{{project.titulo}}</h4>
-
-
 			<div class="demo">
 		        <div class="item">            
 		            <div class="clearfix">
-		                <ul id="image-gallery" class="gallery list-unstyled cS-hidden">
+		                <ul class="pgwSlideshow">
 		                	{% for g in gallery %}
-		                	<li data-thumb="{{g}}"> 
-				                <img style="width: 1140px !important;" src="{{g}}" />
+		                	<li> 
+				                <img src="{{g}}" />
 				            </li> 
 		                	{% endfor %} 
 		                </ul>
@@ -58,21 +57,11 @@
 <script src="views/plugins/Filterizr/dist/jquery.filterizr.min.js"></script>
 <script src="views/plugins/particles/particles.min.js"></script>
 <script src="views/plugins/lightslider/dist/js/lightslider.min.js"></script>
+<script src="views/plugins/PgwSlideshow/pgwslideshow.min.js"></script>
 <script>
 	$(document).ready(function() {
-			
-        $('#image-gallery').lightSlider({
-            gallery:true,
-            item:1,
-            thumbItem:5,
-            slideMargin: 0,
-            auto:false,
-            loop:true,
-            autoWidth:true,
-            onSliderLoad: function() {
-                $('#image-gallery').removeClass('cS-hidden');
-            }  
-        });
+		// Slider
+		 $('.pgwSlideshow').pgwSlideshow();
 	});
 </script>
 {% endblock %}
