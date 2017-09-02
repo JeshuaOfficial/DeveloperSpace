@@ -1,16 +1,15 @@
 {% extends 'overall/layout' %}
 {% block appHeader %}
 {# Slider #}
-<link rel="stylesheet" href="views/plugins/lightslider/dist/css/lightslider.min.css">
-<link rel="stylesheet" href="views/plugins/PgwSlideshow/pgwslideshow.css">
+<link rel="stylesheet" href="views/app/css/emergente-slider.css">
 
 
 {% endblock %}
 {% block content %}
 {# Main Content #}
 <section id="main-content" class="container">
-	<header class="menu-categories-filter">
-		<ul class="menu-filter d-flex pt-3 justify-content-end mr-5 mb-3 flex-wrap">
+	<header class="menu-categories-filter pb-3">
+		<ul class="menu-filter d-flex pt-3 justify-content-end mr-5 flex-wrap">
 			<li class="active" data-filter="all">
 				<a class="text-uppercase pb-0 pl-3 pt-2 pr-1 d-block" href="javascript:void(0)">{{lang.all}}</a>
 			</li>
@@ -23,19 +22,32 @@
 		</ul>
 	</header>
 
-	<section class="row filtr-container">
+	<section class="row filtr-container details-section">
 		<header class="w-100">
 			<h4 class="font-weight-bold text-6b6b6b text-uppercase">{{project.titulo}}</h4>
 			<div class="demo">
 		        <div class="item">            
-		            <div class="clearfix">
-		                <ul class="pgwSlideshow">
-		                	{% for g in gallery %}
+		            <div class="clearfix emergente-sliderShow">
+		                <ul class="emergente-slider">
+		                	{% for i,g in gallery['1200'] %}
 		                	<li> 
-				                <img src="{{g}}" />
+				                <img src="{{g}}" srcset="{{gallery['736'][i]}} 736w, {{gallery['600'][i]}} 600w, {{gallery['414'][i]}} 414w,{{gallery['384'][i]}} 384w" alt="{{g}}"/>
 				            </li> 
 		                	{% endfor %} 
 		                </ul>
+		                <div class="arrow-controls hup">
+		                	<a href="javascript:void(0)" class="esPrev"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+		                	<a href="javascript:void(0)" class="esNext"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+		                </div>
+		                <div class="pag hdown">
+		                	<div class="emg-pag">
+			                	<ul class="slider-pagination"></ul>
+			                </div>
+			                <a href="javascript:void(0)" class="thPrev"><i class="fa fa-chevron-left" aria-hidden="true"></i></a>
+			                <a href="javascript:void(0)" class="thNext"><i class="fa fa-chevron-right" aria-hidden="true"></i></a>
+		                </div>
+		                
+		                
 		            </div>
 		        </div>
 		        
@@ -53,15 +65,7 @@
 
 {# Script Extra #}
 {% block appFooter %}
-<script src="views/plugins/particles/demo/js/lib/stats.js"></script>
 <script src="views/plugins/Filterizr/dist/jquery.filterizr.min.js"></script>
-<script src="views/plugins/particles/particles.min.js"></script>
-<script src="views/plugins/lightslider/dist/js/lightslider.min.js"></script>
-<script src="views/plugins/PgwSlideshow/pgwslideshow.min.js"></script>
-<script>
-	$(document).ready(function() {
-		// Slider
-		 $('.pgwSlideshow').pgwSlideshow();
-	});
-</script>
+<script src="views/app/js/emergente-slider.js"></script>
+
 {% endblock %}

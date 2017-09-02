@@ -41,19 +41,22 @@ class Visitas extends Models implements ModelsInterface {
         $ip_user = $http->server->get('REMOTE_ADDR');
         $users_ip = $session->get('users_ip');
         $visitas = $this->db->select('*', 'visitas', "id_visita = '1'", 'LIMIT 1')[0];
-
-        if ( date('d-m-Y', time() ) == date('d-m-Y', $visitas['time']) ) {
-            $new_time = time() + (60*60*24);
-
+   
+        if ( $visitas['time'] <= time() ) {
+            $new_time = (time() + (60*60*24));
+            
             $this->db->update('visitas',['time' => $new_time, 'contador' => '0'], "id_visita = '1'", 'LIMIT 1');
             $session->set('users_ip', []);
+            $visitas = $this->db->select('*', 'visitas', "id_visita = '1'", 'LIMIT 1')[0];
         }
+
         
         if (null == $session->get('users_ip') || !in_array($ip_user, $users_ip)) {
 
             $users_ip[] = $ip_user;
             $session->set('users_ip', $users_ip);
             $visitas['contador'] = $visitas['contador'] + 1;
+            
             $this->db->update('visitas', ['contador' => $visitas['contador']], "id_visita = '1'",'LIMIT 1');
         }
         

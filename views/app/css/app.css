@@ -74,8 +74,8 @@ ul{
 	font-weight: bold;
 }
 .top-nav .navbar-nav.language-menu{
-	background-color: #333;
-	padding:5px;
+	/*background-color: #333;*/
+	padding: 5px;
 }
 .top-nav .navbar-nav.language-menu li a{
 	color: #4f4f4f !important;
@@ -84,7 +84,7 @@ ul{
 
 .top-nav .navbar-nav.language-menu li a.active{
 
-	color: #80ff00 !important;
+	color: #A4023B !important;
 }
 .top-nav .navbar-nav.navigation-menu li a {
 	font-size: 20px;
@@ -105,8 +105,14 @@ ul{
 }
 
 @media (max-width: 1024px){ 
+	.top-nav .navbar-nav.language-menu{
+		padding: 3px;
+	}
 	.top-nav .navbar-brand img{
-		height: 70px;
+		height: 65px;
+	}
+	.top-nav .navbar-nav.language-menu li a {
+		font-size: 15px;
 	}
 }
 @media (max-width: 768px){ 
@@ -212,6 +218,29 @@ ul{
 	visibility: visible;
 	opacity: 1;
 }
+@media (max-width: 1024px){
+	.details-section h4{
+		font-size: 22px;
+	}
+}
+
+@media (max-width: 991px){
+	.details-section h4{
+		font-size: 20px;
+	}
+}
+
+@media (max-width: 783px){
+	.menu-filter li a {
+		font-size: 15px !important;
+	}
+}
+
+@media (max-width: 640px) {
+	.details-section h4{
+		font-size: 18px;
+	}
+}
 
 
 /* ---- particles.js container ---- */
@@ -246,6 +275,15 @@ ul{
 	background-color: #bbb;
 	height: 300px;
 }
+@media (max-width: 480px){
+	.contact-info .text-muted{
+		font-size: .8rem;
+	}
+	.contact-info i{
+		font-size: 15px;
+	}
+}
+
 
 .footer-page {
 	bottom: 0;
@@ -274,5 +312,55 @@ ul{
 
 	.content-404 a{
 		font-size: 13px;
+	}
+}
+
+/* Estudio - Página: /studio */
+.studio-section{
+	min-height: calc(100vh - 110px);
+}
+.studio-section header{
+	width: 100%;
+	height: 550px;
+}
+.studio-section header .image-presentation {
+	background-repeat: no-repeat;
+	background-size: 100% 100%;
+}
+
+.studio-section article {
+	background-color: #fff;
+	margin-top: -122.094px;
+}
+.studio-section article .arquitectos .arq{
+	width: 200px;
+	height: 300px;
+	background-color: #000;
+	margin-top: -40px;
+}
+@media (max-width: 1215px) {
+	.studio-section article .arquitectos .arq{
+		width: 180px;
+		height: 280px;
+	}
+	.info-description h2{
+		font-size: 1.8rem;
+	}
+	.info-description p{
+		font-size: 14px !important;
+	}
+}
+
+@media (max-width: 1007px) {
+	.studio-section article .arquitectos .arq{
+		width: 150px;
+		height: 250px;
+	}
+
+	.info-description h2{
+		font-size: 1.5rem;
+	}
+	.info-description p{
+		font-size: 13px !important;
 	}
 }

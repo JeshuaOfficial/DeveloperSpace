@@ -16,7 +16,7 @@ use Ocrend\Kernel\Models\Models;
 use Ocrend\Kernel\Models\ModelsInterface;
 use Ocrend\Kernel\Models\ModelsException;
 use Ocrend\Kernel\Router\RouterInterface;
-use Ocrend\Kernel\Helpers\Strings;
+use Ocrend\Kernel\Helpers\{Strings,Files};
 
 
 /**
@@ -27,7 +27,11 @@ use Ocrend\Kernel\Helpers\Strings;
 
 class Proyectos extends Models implements ModelsInterface {
 
-
+    /**
+     * Medidas de los thumbs
+     * @var array
+     */
+    const RESPONSIVE_SIZES = array(1200,736, 600, 414, 384);
 
     /**
       * __construct()
@@ -69,10 +73,13 @@ class Proyectos extends Models implements ModelsInterface {
      * @return array con cada archivo y su directorio
      */
     final public function getGallery(int $id) : array {
+      $dir = 'views/app/images/projects/'.$id.'/';
+      $sizes = array();
+      foreach (self::RESPONSIVE_SIZES as $rs) {
+        $sizes[$rs] = Files::get_files_in_dir($dir . $rs . '/'); 
+      }
 
-      $dir = './views/app/images/projects/'.$id.'/';
-      
-      return glob($dir . '{*.jpg,*.jpeg,*.png,*.gif}', GLOB_BRACE);
+      return $sizes;
     }
         
 
