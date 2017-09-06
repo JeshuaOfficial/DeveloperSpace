@@ -31,7 +31,7 @@ class Proyectos extends Models implements ModelsInterface {
      * Medidas de los thumbs
      * @var array
      */
-    const RESPONSIVE_SIZES = array(1200,736, 600, 414, 384);
+    const RESPONSIVE_SIZES = array(1400);
 
     /**
       * __construct()
@@ -51,13 +51,27 @@ class Proyectos extends Models implements ModelsInterface {
         if (0 != $id) {
           # Traemos un proyecto
           $proj = $this->db->select('*','proyectos', "id_proyectos = '$id'", 'LIMIT 1');
+          $proj[0]['categorias'] = implode(', ', json_decode( $proj[0]['categorias'], true ) );
+          $pr = $proj;
         }else{
           # Traemos todos los proyectos
           $proj = $this->db->select('*','proyectos');
+          foreach ($proj as $p) {
+            $pr[] = array(
+              'id_proyectos' => $p['id_proyectos'],
+              'titulo' => $p['titulo'],
+              'short_desc_es' => $p['short_desc_es'],
+              'short_desc_en' =>  $p['short_desc_en'],
+              'content_es'  => $p['content_es'],
+              'content_en' => $p['content_en'],
+              'categorias' => implode(', ', json_decode( $p['categorias'], true ) ),
+              'portada' => $p['portada'],
+              'logo' => $p['logo']
+            );
+          }
         }
-        $proj[0]['categorias'] = implode(', ', json_decode( $proj[0]['categorias'], true ) );
-        
-        return $proj;
+       
+        return $pr;
     }
 
     /**

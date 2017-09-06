@@ -130,6 +130,17 @@ ul{
 	}
 }
 
+.headroom {
+	transition: transform .3s ease;
+}
+
+.headroom--pinned {
+	transform: translateY(0%);
+}
+.headroom--unpinned {
+	transform: translateY(-100%);
+}
+
 /* Footer */
 .footer-page {
 	margin-top: 50px;
@@ -337,6 +348,10 @@ ul{
 	height: 300px;
 	background-color: #000;
 	margin-top: -40px;
+}
+.studio-section article .arquitectos .arq h5{
+	color: #909090;
+	margin-top: 10px;
 }
 @media (max-width: 1215px) {
 	.studio-section article .arquitectos .arq{

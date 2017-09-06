@@ -29,9 +29,9 @@
 		        <div class="item">            
 		            <div class="clearfix emergente-sliderShow">
 		                <ul class="emergente-slider">
-		                	{% for i,g in gallery['1200'] %}
+		                	{% for g in gallery['1400'] %}
 		                	<li> 
-				                <img src="{{g}}" srcset="{{gallery['736'][i]}} 736w, {{gallery['600'][i]}} 600w, {{gallery['414'][i]}} 414w,{{gallery['384'][i]}} 384w" alt="{{g}}"/>
+				                <img src="{{g}}" alt="{{g}}"/>
 				            </li> 
 		                	{% endfor %} 
 		                </ul>

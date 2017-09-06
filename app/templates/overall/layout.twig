@@ -55,16 +55,19 @@
       <script src="views/app/js/jdev.js"></script>
   {% else %}
       {# jQuery para su plantilla, este puede ser modificado a voluntad #}
-      <script src="views/plugins/jquery/jquery.min.js"></script>
+      <script src="https://ajax.googleapis.com/ajax/libs/jquery/2.2.4/jquery.min.js"></script>
   {% endif %}
   
   {# General plugins #}
+ 
   <script src="views/plugins/tether/js/tether.min.js"></script>
   <script src="views/plugins/bootstrap/js/bootstrap.min.js"></script>
   <script src="views/plugins/toastr/toastr.min.js"></script>
+  <script src="views/app/js/headroom.min.js"></script>
 
   {# Estilos de la pagina #}
   <script src="views/app/js/page.js"></script>
+  <script src="views/app/js/menu.js"></script>
 
   {# scripts extras #}
   {% block appFooter %}{% endblock %}
