@@ -44,7 +44,7 @@
 		
 	}
 	function body_condition(){
-		if ($('body').width() <= 768) {
+		if ($('body').width() <= 991) {
 			responsive_menu();
 		}
 	}

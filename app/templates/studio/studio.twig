@@ -2,24 +2,25 @@
 {% block content %}
     <section class="studio-section container pb-5">
     	<header>
-    		<div data-background="{{portada.main}}" data-responsives="{{portada.responsive}}" class="image-presentation full"></div>
+
+    		<div style="background-image:url('{{portada}}')" class="image-presentation full"></div>
     	</header>
 
     	<article class="pt-3">
     		<div class="row">
-    			<div class="col-md-6 px-5 info-description">
+    			<div class="col-md-6 px-5 info-description mb-5">
                     <h2>{{ data['titulo_' ~ actual_lang] }}</h2>
 	    			<p>{{ data['descripcion_' ~ actual_lang] }}</p>
 	    		</div>
 	    		<div class="col-md-6">
 	    			<div class="arquitectos text-center d-flex justify-content-center">
                         <div class="arq">
-                            <img src="{{ data.arquitecto1 }}" class="full" alt="Arquitecto1.jpg">
+                            <img src="{{ data.arquitecto1 }}" class="full-width" alt="Arquitecto1.jpg">
                             <h5 class="text-center">{{ data.arquitecto1_name }}</h5>
                         </div>
                         <div class="mx-xl-4 ml-md-3"></div>
                         <div class="arq">
-                            <img src="{{ data.arquitecto2 }}" class="full" alt="Arquitecto1.jpg">
+                            <img src="{{ data.arquitecto2 }}" class="full-width" alt="Arquitecto1.jpg">
                             <h5 class="text-center">{{ data.arquitecto2_name }}</h5>
                         </div>            
                     </div>

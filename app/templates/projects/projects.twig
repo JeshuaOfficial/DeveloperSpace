@@ -18,8 +18,8 @@
 	</header>
 
 	<div class="row mt-5 projects filtr-container">
-		{% for p in projects %}
-		<article class="col-md-4 col-sm-6 filtr-item" id="articulo_{{p.id_proyectos}}" data-category="{{p.categorias}}" onclick="execute_plug('articulo_{{p.id_proyectos}}','particles-js_{{p.id_proyectos}}')">
+		{% for p in projects if false != projects %}
+		<article class="col-md-4 col-sm-6 filtr-item project" id="articulo_{{p.id_proyectos}}" data-category="{{p.categorias}}">
 			<a data-href="projects/{{p.id_proyectos}}/{{url_amigable(p.titulo)}}/" class="full">
 				<figure class="m-0 p-relative full">
 					<img class="img-thumbnail p-0 full" src="{{p.portada}}" alt="">
@@ -31,6 +31,13 @@
 					</figcaption>
 				</figure>
 			</a>
+		</article>
+		{% else %}
+		<article class="col-md-12 col-sm-12 filtr-item project" data-category="1">
+			<div class="alert alert-info">
+				<strong><i class="fa fa-info-circle"></i> Información:</strong>
+				No hay proyectos subidos.
+			</div>
 		</article>
 		{% endfor %}
 		
@@ -49,4 +56,5 @@
 
  {# Inicialización de los plugins #}
  <script src="views/app/js/filterz.js"></script>
+
 {% endblock %}

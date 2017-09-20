@@ -27,6 +27,8 @@ class studioController extends Controllers implements ControllersInterface {
     public function __construct(RouterInterface $router) {
         parent::__construct($router);   
         $s = new Model\Studio;
+
+        
 		echo $this->template->render('studio/studio', array(
 			'data' => $s->get(),
 			'portada' => $s->getImages($s->get()['portada'])

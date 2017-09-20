@@ -51,11 +51,17 @@ class Proyectos extends Models implements ModelsInterface {
         if (0 != $id) {
           # Traemos un proyecto
           $proj = $this->db->select('*','proyectos', "id_proyectos = '$id'", 'LIMIT 1');
+          if (false == $proj) {
+          	return false;
+          }
           $proj[0]['categorias'] = implode(', ', json_decode( $proj[0]['categorias'], true ) );
           $pr = $proj;
         }else{
           # Traemos todos los proyectos
           $proj = $this->db->select('*','proyectos');
+          if (false == $proj) {
+          	return false;
+          }
           foreach ($proj as $p) {
             $pr[] = array(
               'id_proyectos' => $p['id_proyectos'],

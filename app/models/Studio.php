@@ -30,11 +30,7 @@ class Studio extends Models implements ModelsInterface {
      * @var string
      */
     const MAIN_IMAGE = 1400;
-    /**
-     * Medidas de los thumbs
-     * @var array
-     */
-    const RESPONSIVE_SIZES = array(1200,1024,768,600,414,384);
+    
 
     /**
       * __construct()
@@ -51,15 +47,8 @@ class Studio extends Models implements ModelsInterface {
     }
 
     final public function getImages(string $dir) {
-      $a = array();
-      foreach (self::RESPONSIVE_SIZES as $size) {
-        $a[$size] = glob($dir . $size . '/*')[0];
-      }
-    
-      return array(
-        'main' => glob($dir . self::MAIN_IMAGE . '/*')[0],
-        'responsive' => json_encode($a)
-      );
+        
+      return glob($dir . self::MAIN_IMAGE . '/*')[0];
     }
 
     /**
